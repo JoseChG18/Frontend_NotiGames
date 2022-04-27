@@ -5,11 +5,11 @@
 /**
  * https://getbootstrap.com/docs/5.0/components/navbar/
  */
-function Nav() {
+function Nav(props) {
   return (
     <nav
       className="navbar navbar-light navbar-expand-lg"
-      style={{ background: "#e3f2fd" }}
+      style={{ backgroundColor: "#e3f2fd" }}
     >
       <div className="container-fluid">
         <a href="/" className="navbar-brand">
@@ -44,13 +44,13 @@ function Nav() {
             <li className="nav-item dropdown">
               <a
                 href="/"
-                className="nav-link dropdown-toggle"
+                className="nav-link active dropdown-toggle"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Nombre
+                {props.usuario.nombre}
               </a>
 
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">

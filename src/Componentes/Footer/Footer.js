@@ -4,10 +4,11 @@
  * La manera en que esta el estilo habria que cambiarla. no es buena practica  
  * ponerlo como objeto o inline
  */
+import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="text-center text-lg-start" style={ {'backgroundColor': 'rgba(0,0,0,0.2)'} }>
+    <footer className="text-center text-lg-start container-fluid">
       <div className="text-center p-3" >
         © 2022 Copyright:&nbsp;
         <a href="/" className="text-dark">
