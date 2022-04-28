@@ -99,7 +99,7 @@
   border-color: black;
 }
 
-div#div_file {
+/* div#div_file {
   background-color: #721414 !important;
   box-shadow: 0px 3px 0px #290404 !important;
 }
@@ -108,7 +108,7 @@ div#div_file:hover {
   background-color: #a02222 !important;
   transition: 0.55s;
   transform: scale(1.05);
-}
+} */
 
 .titulo {
   text-align: center;

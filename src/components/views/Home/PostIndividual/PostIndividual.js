@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import Vermas from "./Vermas/Vermas";
-import "./Post.css";
+import Vermas from "./Vermas";
+import "./PostIndividual.css";
 
-class Post extends Component {
-  state = {
-    flecha: true,
-  };
+class PostIndividual extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      flecha: true,
+    }
+  }
 
   cambioFlecha = () => {
     this.setState({ flecha: !this.state.flecha });
@@ -18,7 +21,7 @@ class Post extends Component {
         {/* Inicio Contenedor Mensajes del Foro  */}
         <div className="mensajeForo">
           <div className="titulo text-center">
-            <a href="./comentarioNoticias.php?ID_POST=<?php echo $value->ID_POST ?>">
+            <a href='/post/{id}'>
               {this.props.datos.titulo}
             </a>
           </div>
@@ -72,4 +75,4 @@ class Post extends Component {
     );
   }
 }
-export default Post;
+export default PostIndividual;
