@@ -6,6 +6,7 @@ import Footer from "../Footer";
 
 import FotoPerfil from "./FotoPerfil";
 import Estadisticas from "./Estadisticas";
+import { Link } from "react-router-dom";
 
 class Profile extends Component {
   constructor(props) {
@@ -76,14 +77,7 @@ class Profile extends Component {
                       <div className="btn-edit-profile">
                         <div className="row">
                           <div className="col-sm-3 ">
-                            <button
-                              id="update"
-                              // onClick="updateProfile('update')"
-                              type="button"
-                              className="btn btn-outline-primary"
-                            >
-                              Editar
-                            </button>
+                            <Link to={"edit"} className="btn btn-outline-primary">Editar</Link>
                           </div>
                         </div>
                       </div>

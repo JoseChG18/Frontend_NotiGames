@@ -7,14 +7,16 @@
  */
 import "./Header.css";
 import logo from "../../../images/logo.png";
+import { Link } from "react-router-dom";
 
 function Header(props) {
   return (
     <nav className="navbar navbar-light navbar-expand-lg">
       <div className="container-fluid">
-        <a href="/" className="navbar-brand">
+        <Link to={"/"} className="navbar-brand">
           <img src={logo} alt="logo" width="100rem" />
-        </a>
+        </Link>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -29,9 +31,9 @@ function Header(props) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
-                Home
-              </a>
+              <Link to={"/"} className="nav-link active" aria-current="page">
+                Inicio
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -47,14 +49,14 @@ function Header(props) {
 
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="/profile">
+                  <Link to={"/profile"} className="dropdown-item">
                     Perfil
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/login">
-                    Log Out
-                  </a>
+                  <Link to={"/login"} className="dropdown-item">
+                    Cerrar Sesión
+                  </Link>
                 </li>
               </ul>
             </li>

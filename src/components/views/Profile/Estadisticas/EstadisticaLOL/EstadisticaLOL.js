@@ -9,7 +9,7 @@ function EstadisticaLOL(){
               {/* <!-- Formulario LOL --> */}
 
               <form action="" method="post" id="lolFormId">
-                <div className="row g-3 m-1 align-items-center p-1">
+                <div className="row g-3 align-items-center p-1">
                   <div className="col-3">
                     <label htmlFor="inputPassword6" className="col-form-label">
                       MMR:{" "}
