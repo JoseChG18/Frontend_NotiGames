@@ -30,7 +30,7 @@ function PostIndividual(props) {
         {/* Inicio Flecha ver mas */}
         <div className="vermas">
           <span
-            onClick={cambioFlecha(!flecha)}
+            onClick={ () => cambioFlecha(!flecha)}
             id={flecha ? "mas" : "menos"} // mas || menos
             data-dir={flecha ? "down" : "up"} // down || up
             className={flecha ? "arrow down" : "arrow up"} // down || arrow up

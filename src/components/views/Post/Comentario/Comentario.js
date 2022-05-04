@@ -13,28 +13,26 @@ function Comentario(props) {
               hidden
               type="text"
               name="idPost"
-              value="<?php echo $data[0]->ID_POST; ?>"
             />
             <button
               className="btn btn-danger my-2"
               id="btnComentar"
               type="submit"
               name="idComentario"
-              value="<?php echo $comentario->ID_Comentario; ?>"
             >
               X
             </button>
           </form>
 
           <h5 className="pt-2">
-            <strong>{props.datos.autor}</strong>
+            <strong>{props.datos.idUser}</strong>
           </h5>
         </div>
         <div className="card-body">
           <h5 className="card-title">{props.datos.comentario}</h5>
           <p className="card-text"></p>
           <span id="btnComentar" className="btn btn-primary">
-            {props.datos.fecha}
+            {props.datos.fechaComentario}
           </span>
         </div>
       </div>
