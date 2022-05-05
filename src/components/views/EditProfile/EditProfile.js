@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./EditProfile.css";
 import Header from "../Header";
 import Footer from "../Footer";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function EditProfile(props) {
+  
+  const id = useParams().id;
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/user/" + id)
+      .then((response) => response.json())
+      .then((result) => setProfile(result));
+  }, [id]);
+
   return (
     <div id="load">
       <Header />
@@ -37,7 +47,7 @@ function EditProfile(props) {
                         className="form-control"
                         name="user"
                         placeholder="Usuario"
-                        value="UsuarioA"
+                        value={profile.usuario}
                       />
                     </div>
                     <div className="col-md-12">
@@ -59,7 +69,7 @@ function EditProfile(props) {
                         className="form-control"
                         name="nombre"
                         placeholder="Nombre"
-                        value="NombreA"
+                        value={profile.nombre}
                       />
                     </div>
                     <div className="col-md-6">
@@ -69,7 +79,7 @@ function EditProfile(props) {
                         className="form-control"
                         name="apellidos"
                         placeholder="Apellidos"
-                        value="ApellidosA"
+                        value={profile.apellidos}
                       />
                     </div>
                   </div>
@@ -81,7 +91,7 @@ function EditProfile(props) {
                         className="form-control"
                         name="email"
                         placeholder="example@gmail.com"
-                        value="EmailA"
+                        value={profile.email}
                       />
                     </div>
                     <div className="col-md-12">
@@ -91,7 +101,7 @@ function EditProfile(props) {
                         className="form-control"
                         name="telefono"
                         placeholder="Ingrese el numero de telefono"
-                        value="TelefonoA"
+                        value={profile.telefono}
                       />
                     </div>
                     <div className="col-md-12">
@@ -101,7 +111,7 @@ function EditProfile(props) {
                         className="form-control"
                         name="provincia"
                         placeholder="Ingrese la Provincia"
-                        value="ProvinciaA"
+                        value={profile.provincia}
                       />
                     </div>
                     <div className="col-md-12">
@@ -111,7 +121,7 @@ function EditProfile(props) {
                         className="form-control"
                         name="ciudad"
                         placeholder="Ciudad"
-                        value="CiudadA"
+                        value={profile.ciudad}
                       />
                     </div>
                   </div>
@@ -121,7 +131,7 @@ function EditProfile(props) {
                       type="submit"
                       value="Editar"
                     />
-                    <Link to={"/profile"} className="btn btn-primary profile-button">Cancelar</Link>
+                    <Link to={"/profile/"+id} className="btn btn-primary profile-button">Cancelar</Link>
                   </div>
                 </div>
               </div>

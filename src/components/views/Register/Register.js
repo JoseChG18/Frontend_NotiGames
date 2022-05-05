@@ -2,8 +2,51 @@ import "./Register.css";
 import Header from "../Header";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Register() {
+
+  const [usuario, setUsuario] = useState("");
+  const [password, setPassword] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [apellidos, setApellidos] = useState("");
+  const [email, setEmail] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [provincia, setProvincia] = useState("");
+  const [ciudad, setCiudad] = useState("");
+
+  const onChangeUsuario = (e) =>{
+    const usuario = e.target.value;
+    setUsuario(usuario)
+  }
+  const onChangePassword = (e) =>{
+    const password = e.target.value;
+    setPassword(password)
+  }
+  const onChangeNombre = (e) =>{
+    const nombre = e.target.value;
+    setNombre(nombre)
+  }
+  const onChangeApellidos = (e) =>{
+    const apellidos = e.target.value;
+    setApellidos(apellidos)
+  }
+  const onChangeEmail = (e) =>{
+    const email = e.target.value;
+    setEmail(email)
+  }
+  const onChangeTelefono = (e) =>{
+    const telefono = e.target.value;
+    setTelefono(telefono)
+  }
+  const onChangeProvincia = (e) =>{
+    const provincia = e.target.value;
+    setProvincia(provincia)
+  }
+  const onChangeCiudad = (e) =>{
+    const ciudad = e.target.value;
+    setCiudad(ciudad)
+  }
   return (
     <div id="load">
       <Header />
@@ -38,6 +81,8 @@ function Register() {
                       className="form-control"
                       name="user"
                       placeholder="Usuario"
+                      value={usuario}
+                      onChange={onChangeUsuario}
                     />
                   </div>
                   <div className="col-md-12">
@@ -47,6 +92,8 @@ function Register() {
                       className="form-control"
                       name="pass"
                       placeholder="Ingrese su Contraseña"
+                      value={password}
+                      onChange={onChangePassword}
                     />
                   </div>
                 </div>
@@ -58,6 +105,8 @@ function Register() {
                       className="form-control"
                       name="nombre"
                       placeholder="Nombre"
+                      value={nombre}
+                      onChange={onChangeNombre}
                     />
                   </div>
                   <div className="col-md-6">
@@ -67,6 +116,8 @@ function Register() {
                       className="form-control"
                       name="apellidos"
                       placeholder="Apellidos"
+                      value={apellidos}
+                      onChange={onChangeApellidos}
                     />
                   </div>
                 </div>
@@ -78,6 +129,8 @@ function Register() {
                       className="form-control"
                       name="email"
                       placeholder="example@example.com"
+                      value={email}
+                      onChange={onChangeEmail}
                     />
                   </div>
                   <div className="col-md-12">
@@ -87,6 +140,8 @@ function Register() {
                       className="form-control"
                       name="telefono"
                       placeholder="Ingrese el numero de telefono"
+                      value={telefono}
+                      onChange={onChangeTelefono}
                     />
                   </div>
                   <div className="col-md-12">
@@ -96,6 +151,8 @@ function Register() {
                       className="form-control"
                       name="provincia"
                       placeholder="Ingrese la Provincia"
+                      value={provincia}
+                      onChange={onChangeProvincia}
                     />
                   </div>
                   <div className="col-md-12">
@@ -105,6 +162,8 @@ function Register() {
                       className="form-control"
                       name="ciudad"
                       placeholder="Ciudad"
+                      value={ciudad}
+                      onChange={onChangeCiudad}
                     />
                   </div>
                 </div>

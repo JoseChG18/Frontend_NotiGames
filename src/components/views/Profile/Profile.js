@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
 
 import Header from "../Header";
@@ -6,93 +6,107 @@ import Footer from "../Footer";
 
 import FotoPerfil from "./FotoPerfil";
 import Estadisticas from "./Estadisticas";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-class Profile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+function Profile() {
+  const id = useParams().id;
+  const [profile, setProfile] = useState([]);
 
-  render() {
-    return (
-      <div>
-        <Header />
-        {/* Inicio Contenedor Perfil */}
-        <div className="container-perfil contenedorPadre">
-          {/* https://www.bootdey.com/snippets/view/profile-with-data-and-skills */}
-          <div className="container-div">
-            <div className="container">
-              <div className="row gutters-sm">
-                <div className="col-md-4 mb-3">
-                  <FotoPerfil />
-                </div>
-                <div className="col-md-8">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Nombre Completo</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">Manolito</div>
+  useEffect(() => {
+    fetch("http://localhost:8000/api/user/" + id)
+      .then((response) => response.json())
+      .then((result) => setProfile(result));
+  }, [id]);
+
+  return (
+    <div>
+      <Header />
+      {/* Inicio Contenedor Perfil */}
+      <div className="container-perfil contenedorPadre">
+        {/* https://www.bootdey.com/snippets/view/profile-with-data-and-skills */}
+        <div className="container-div">
+          <div className="container">
+            <div className="row gutters-sm">
+              <div className="col-md-4 mb-3">
+                <FotoPerfil />
+              </div>
+              <div className="col-md-8">
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Nombre Completo</h6>
                       </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Email</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">
-                          Paco@gmail.com
-                        </div>
+                      <div className="col-sm-9 text-secondary">
+                        {profile.nombre + " " + profile.apellidos}
                       </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Usuario</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">Pquito</div>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Email</h6>
                       </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Telefono</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">Existe</div>
+                      <div className="col-sm-9 text-secondary">
+                        {profile.email}
                       </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Ciudad</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">Aqumismo</div>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Usuario</h6>
                       </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Provincia</h6>
-                        </div>
-                        <div className="col-sm-9 text-secondary">Aqui mismo</div>
+                      <div className="col-sm-9 text-secondary">
+                        {profile.usuario}
                       </div>
-                      <hr />
-                      <div className="btn-edit-profile">
-                        <div className="row">
-                          <div className="col-sm-3 ">
-                            <Link to={"edit"} className="btn btn-outline-primary">Editar</Link>
-                          </div>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Telefono</h6>
+                      </div>
+                      <div className="col-sm-9 text-secondary">
+                        {profile.telefono}
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Ciudad</h6>
+                      </div>
+                      <div className="col-sm-9 text-secondary">
+                        {profile.ciudad}
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <h6 className="mb-0">Provincia</h6>
+                      </div>
+                      <div className="col-sm-9 text-secondary">
+                        {profile.provincia}
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="btn-edit-profile">
+                      <div className="row">
+                        <div className="col-sm-3 ">
+                          <Link to={"edit"} className="btn btn-outline-primary">
+                            Editar
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <Estadisticas />
               </div>
+              <Estadisticas />
             </div>
           </div>
         </div>
-        <Footer />
       </div>
-    );
-  }
+      <Footer />
+    </div>
+  );
 }
 
 export default Profile;

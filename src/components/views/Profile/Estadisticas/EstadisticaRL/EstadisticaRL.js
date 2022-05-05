@@ -1,4 +1,31 @@
+import { useState } from "react";
+
 function EstadisticaRL(){
+
+  const [rango,setRango] = useState("");
+  const [horas,setHoras] = useState("");
+  const [goles,setGoles] = useState("");
+  const [saves,setSAves] = useState("");
+
+  const onChangeRango = (e) =>{
+    const rango = e.target.value;
+    setRango(rango);
+  }
+
+  const onChangeHoras = (e) => {
+    const horas = e.target.value;
+    setHoras(horas);
+  }
+
+  const onChangeGoles = (e) => {
+    const goles = e.target.value;
+    setHoras(goles);
+  }
+
+  const onChangeSaves = (e) => {
+    const saves = e.target.value;
+    setHoras(saves);
+  }
     return(
         <div
               className="tab-pane fade p-3"
@@ -10,37 +37,35 @@ function EstadisticaRL(){
               <form action="" method="post" id="rocketFormId">
                 <div className="row g-3 align-items-center  p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
-                      MMR:{" "}
+                    <label htmlFor="rango" className="col-form-label">
+                      Rango:{" "}
                     </label>
                   </div>
                   <div className="col-6">
                     <input
-                      name="mmr"
-                      value="<?php echo $mmr ?>"
+                      name="rango"
+                      value={rango}
+                      onChange={onChangeRango}
                       type=" text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
-                      title="Introduce el MMR que dispongas."
+                      title="Introduce el Rango que dispongas."
                     />
                   </div>
                 </div>
 
                 <div className="row g-3 align-items-center  p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
+                    <label htmlFor="nHoras" className="col-form-label">
                       Numero de horas:{" "}
                     </label>
                   </div>
                   <div className="col-6">
                     <input
                       name="nHoras"
-                      value="<?php echo $nHoras ?>"
+                      value={horas}
+                      onChange={onChangeHoras}
                       type=" text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
                       title="Introduce el numero de horas jugadas."
                     />
                   </div>
@@ -48,18 +73,17 @@ function EstadisticaRL(){
 
                 <div className="row g-3 align-items-center  p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
+                    <label htmlFor="goles" className="col-form-label">
                       Numero de goles:{" "}
                     </label>
                   </div>
                   <div className="col-6">
                     <input
                       name="goles"
-                      value="<?php echo $goles ?>"
+                      value={goles}
+                      onChange={onChangeGoles}
                       type="text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
                       title="Introduce el numero de goles marcados."
                     />
                   </div>
@@ -67,18 +91,17 @@ function EstadisticaRL(){
 
                 <div className="row g-3 align-items-center  p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
+                    <label htmlFor="saves" className="col-form-label">
                       Numero de salvadas:{" "}
                     </label>
                   </div>
                   <div className="col-6">
                     <input
                       name="saves"
-                      value="<?php echo $saves ?>"
+                      value={saves}
+                      onChange={onChangeSaves}
                       type="text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
                       title="Introduce el numero de salvadas en partidos."
                     />
                   </div>

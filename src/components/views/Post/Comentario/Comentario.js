@@ -1,28 +1,31 @@
 function Comentario(props) {
+
+  const deleteComentario = () =>{
+    
+    let requestOptions = {
+      method: 'DELETE',
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:8000/api/comentario/"+props.datos.id , requestOptions)
+    .then((response) => response.json())
+    .then((result) => console.log(result))
+  }
+
   return (
     <div className="comentario">
       <div className="card mb-2">
         <div className="card-header">
           {/* Si eres dueño o Admin */}
-          <form
-            action="/codigoapp/source/controller/controllerDeleteComentario.php"
-            className="float-end"
-            method="post"
-          >
-            <input
-              hidden
-              type="text"
-              name="idPost"
-            />
             <button
-              className="btn btn-danger my-2"
+              onClick={() => deleteComentario()}
+              className="btn btn-danger my-2 float-end"
               id="btnComentar"
-              type="submit"
+              type="button"
               name="idComentario"
             >
               X
             </button>
-          </form>
 
           <h5 className="pt-2">
             <strong>{props.datos.idUser}</strong>

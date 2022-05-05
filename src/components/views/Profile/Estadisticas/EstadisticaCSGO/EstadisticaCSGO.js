@@ -1,4 +1,28 @@
+import { useState } from "react";
+
 function EstadisticaCSGO(){
+  const [rango,setRango] = useState("");
+  const [horas,setHoras] = useState("");
+  const [kills,setKills] = useState("");
+  const [muertes,setMuertes] = useState("");
+
+  const onChangeRango = (e) => {
+    const rango = e.target.value;
+    setRango(rango);
+  }
+
+  const onChangeHoras = (e) => {
+    const horas = e.target.value;
+    setHoras(horas);
+  }
+  const onChangeKills = (e) => {
+    const kills = e.target.value;
+    setKills(kills);
+  }
+  const onChangeMuertes = (e) => {
+    const muertes = e.target.value;
+    setMuertes(muertes);
+  }
     return(
         <div
               className="tab-pane fade p-3"
@@ -9,39 +33,37 @@ function EstadisticaCSGO(){
               {/* <!-- Formulario CSGO --> */}
 
               <form action="" method="post" id="csgoFormId">
-                <div className="row g-3 align-items-center  p-1">
+                <div className="row g-3 align-items-center p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
-                      MMR:{" "}
+                    <label htmlFor="rango" className="col-form-label">
+                      Rango: 
                     </label>
                   </div>
                   <div className="col-6">
                     <input
-                      name="mmr"
-                      value="<?php echo $mmr ?>"
+                      name="rango"
+                      value={rango}
+                      onChange={onChangeRango}
                       type="text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
-                      title="Introduce el MMR que dispongas."
+                      title="Introduce el Rango que dispongas."
                     />
                   </div>
                 </div>
 
                 <div className="row g-3 align-items-center  p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
+                    <label htmlFor="nHoras" className="col-form-label">
                       Numero de horas:{" "}
                     </label>
                   </div>
                   <div className="col-6">
                     <input
                       name="nHoras"
-                      value="<?php echo $nHoras ?>"
+                      value={horas}
+                      onChange={onChangeHoras}
                       type="text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
                       title="Introduce el numero de horas jugadas."
                     />
                   </div>
@@ -49,18 +71,17 @@ function EstadisticaCSGO(){
 
                 <div className="row g-3 align-items-center  p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
+                    <label htmlFor="kills" className="col-form-label">
                       Numero de kills:{" "}
                     </label>
                   </div>
                   <div className="col-6">
                     <input
                       name="kills"
-                      value="<?php echo $kills ?>"
+                      value={kills}
+                      onChange={onChangeKills}
                       type="text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
                       title="Introduce el numero de kills realizadas."
                     />
                   </div>
@@ -68,18 +89,17 @@ function EstadisticaCSGO(){
 
                 <div className="row g-3 align-items-center  p-1">
                   <div className="col-3">
-                    <label htmlFor="inputPassword6" className="col-form-label">
+                    <label htmlFor="muertes" className="col-form-label">
                       Muertes:{" "}
                     </label>
                   </div>
                   <div className="col-6">
                     <input
                       name="muertes"
-                      value="<?php echo $muertes ?>"
+                      value={muertes}
+                      onChange={onChangeMuertes}
                       type="text"
-                      id="inputPassword6"
                       className="form-control"
-                      aria-describedby="passwordHelpInline"
                       title="Introduce el numero de muertes sobre ti."
                     />
                   </div>

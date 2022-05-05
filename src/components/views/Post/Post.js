@@ -4,25 +4,48 @@ import Footer from "../Footer";
 import Comentario from "./Comentario";
 import { Link, useParams } from "react-router-dom";
 
-
-function Post(props) {
+function Post() {
   
   const [isLoading, setIsLoading] = useState(true);
 
   const id = useParams().id;
-
-  const [post, setPost] = useState(null);
 
   const [comentarios, setComentarios] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/comentario")
       .then((response) => response.json())
-      .then((result) => setComentarios(result) )
-  }, [])
+      .then((result) => setComentarios(result));
+  }, []);
 
+  const [comentario, setComentario] = useState("");
+
+  const onChangeComentario = (e) => {
+    setComentario(e.target.value);
+  };
+
+  const crearComentario = () => {
+    var formdata = new FormData();
+    formdata.append("comentario", comentario);
+    formdata.append("idPost", id);
+    formdata.append("idUser", "1");
+    let requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:8000/api/comentario", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        // setComentarios(result);
+        console.log(result);
+      });
+  };
+  
+  const [post, setPost] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:8000/api/post/"+id)
+    fetch("http://localhost:8000/api/post/" + id)
       .then((response) => response.json())
       .then((result) => {
         setPost(result);
@@ -57,7 +80,7 @@ function Post(props) {
             </div>
             {/* Si eres Dueño del post o Admin*/}
             <form
-              action={"https://localhost:8000/post/"+id+"/eliminar"}
+              action={"https://localhost:8000/post/" + id + "/eliminar"}
               method="post"
               className="d-inline"
             >
@@ -66,11 +89,10 @@ function Post(props) {
                 id="btnComentar"
                 type="submit"
               >
-              X
+                X
               </button>
             </form>
-            <Link to={"edit"}
-            className="btn btn-danger my-2">
+            <Link to={"edit"} className="btn btn-danger my-2">
               Modificar
             </Link>
             {/* Fin Contenedor-footer */}
@@ -83,20 +105,18 @@ function Post(props) {
           </div>
           {/* Fin noticia */}
           {/* Añadir Comentario */}
-          <form
-            action="/codigoapp/source/controller/controllerSaveComentarios.php"
-            method="POST"
-          >
+          <form onSubmit={crearComentario}>
             <div className="formContent justify-content-center">
               <div className="my-2 col-5">
                 <textarea
                   name="comentario"
                   className="form-control"
                   id="FormControlTextarea1"
+                  value={comentario}
+                  onChange={onChangeComentario}
                 ></textarea>
               </div>
               <div className="button">
-                {/* <input hidden name="ID_POST" value="IDPOST" /> */}
                 <button
                   type="submit"
                   id="btnComentar"
