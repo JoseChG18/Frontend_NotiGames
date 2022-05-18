@@ -5,7 +5,6 @@ import Footer from "../Footer";
 import { Link, useParams } from "react-router-dom";
 
 function EditProfile(props) {
-
   const id = useParams().id;
   const [profile, setProfile] = useState([]);
 
@@ -21,7 +20,7 @@ function EditProfile(props) {
 
       {/* Inicio Contenedor Editar-Perfil */}
       <form action="" method="post">
-        <div className="simu-body">
+        <div className="simu-body d-flex justify-content-center aling-self-center">
           <div className="container rounded bg-white mt-0 mb-0">
             <div className="row">
               <div className="col-md-4 border-end">
@@ -131,7 +130,12 @@ function EditProfile(props) {
                       type="submit"
                       value="Editar"
                     />
-                    <Link to={"/profile/" + id} className="btn btn-primary profile-button">Cancelar</Link>
+                    <Link
+                      to={"/profile/" + id}
+                      className="btn btn-primary profile-button"
+                    >
+                      Cancelar
+                    </Link>
                   </div>
                 </div>
               </div>

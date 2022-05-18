@@ -38,7 +38,7 @@ function Profile() {
                         <h6 className="mb-0">Nombre Completo</h6>
                       </div>
                       <div className="col-sm-9 text-secondary">
-                        {profile.nombre + " " + profile.apellidos}
+                        {profile.name + " " + profile.surname}
                       </div>
                     </div>
                     <hr />
@@ -56,7 +56,7 @@ function Profile() {
                         <h6 className="mb-0">Usuario</h6>
                       </div>
                       <div className="col-sm-9 text-secondary">
-                        {profile.usuario}
+                        {profile.username}
                       </div>
                     </div>
                     <hr />

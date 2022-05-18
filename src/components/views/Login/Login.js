@@ -22,7 +22,7 @@ function Login() {
       <Header />
       <div className="loginCenter">
         <form
-          action="http://localhost:8000/api/auth/login"
+          action="http://localhost:8000/api/login"
           method="post"
           className="formularioLoginClass"
         >

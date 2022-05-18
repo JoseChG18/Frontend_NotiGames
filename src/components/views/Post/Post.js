@@ -6,23 +6,36 @@ import Comentario from "./Comentario";
 import { Link, useParams } from "react-router-dom";
 
 function Post() {
-
   const [isLoading, setIsLoading] = useState(true);
 
   const id = useParams().id;
 
-  const [comentarios, setComentarios] = useState(null);
+  // const [comentarios, setComentarios] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:8000/api/comentario")
-      .then((response) => response.json())
-      .then((result) => setComentarios(result));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/api/comment")
+  //     .then((response) => response.json())
+  //     .then((result) => setComentarios(result));
+  // }, []);
 
   const [comentario, setComentario] = useState("");
 
   const onChangeComentario = (e) => {
     setComentario(e.target.value);
+  };
+
+  const deletePost = () => {
+    let requestOptions = {
+      method: "DELETE",
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:8000/api/post/" + id, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        // setComentarios(result);
+        console.log(result);
+      });
   };
 
   const crearComentario = () => {
@@ -36,7 +49,7 @@ function Post() {
       redirect: "follow",
     };
 
-    fetch("http://localhost:8000/api/comentario", requestOptions)
+    fetch("http://localhost:8000/api/comment", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         // setComentarios(result);
@@ -73,35 +86,30 @@ function Post() {
             {/* Inicio Contenedor-footer */}
             <div className="container-footer">
               {/* Inicio Contenedor-Fecha Publi */}
-              <div className="fechaPublicacion">{post.fechaPost}</div>
+              <div className="fechaPublicacion">{post.created_at}</div>
               {/* Fin Contenedor-Fecha Publi */}
               {/* Inicio Contenedor-Firma */}
-              <div className="firma">{post.idUsuario}</div>
+              <div className="firma">{post.user.username}</div>
               {/* Fin Contenedor-Firma */}
             </div>
             {/* Si eres Dueño del post o Admin*/}
-            <form
-              action={"https://localhost:8000/post/" + id + "/eliminar"}
-              method="post"
-              className="d-inline"
+            <button
+              onClick={() => deletePost()}
+              className="btn btn-danger my-2"
+              id="btnComentar"
+              type="submit"
             >
-              <button
-                className="btn btn-danger my-2"
-                id="btnComentar"
-                type="submit"
-              >
-                X
-              </button>
-            </form>
+              X
+            </button>
             <Link to={"edit"} className="btn btn-danger my-2">
               Modificar
             </Link>
             {/* Fin Contenedor-footer */}
             {/* Inicio Titulo noticia */}
-            <h1 id="tNoticia">{post.titulo}</h1>
+            <h1 id="tNoticia">{post.tittle}</h1>
             {/* Fin Titulo noticia */}
             {/* Inicio Contenido noticia */}
-            <p id="contenidoNoticia">{post.texto}</p>
+            <p id="contenidoNoticia">{post.description}</p>
             {/* Fin Contenido noticia */}
           </div>
           {/* Fin noticia */}
@@ -130,7 +138,7 @@ function Post() {
           </form>
           {/* Fin Añadir Comentario */}
           {/* Inicio comentario */}
-          {comentarios.map((comentario) => (
+          {post.comments.map((comentario) => (
             <Comentario key={comentario.id} datos={comentario} />
           ))}
           {/* Fin comentario */}

@@ -1,18 +1,19 @@
 import "./Comentario.scss";
 
 function Comentario(props) {
+  console.log(props);
 
   const deleteComentario = () => {
-
     let requestOptions = {
-      method: 'DELETE',
-      redirect: 'follow'
+      method: "DELETE",
+      redirect: "follow",
     };
 
-    fetch("http://localhost:8000/api/comentario/" + props.datos.id, requestOptions)
+    fetch("http://localhost:8000/api/comment/" + props.datos.id, requestOptions)
       .then((response) => response.json())
       .then((result) => console.log(result))
-  }
+      .catch((error) => console.log("error", error));
+  };
 
   return (
     <div className="comentario">
@@ -30,14 +31,14 @@ function Comentario(props) {
           </button>
 
           <h5 className="pt-2">
-            <strong>{props.datos.idUser}</strong>
+            <strong>{props.datos.user_id}</strong>
           </h5>
         </div>
         <div className="card-body">
-          <h5 className="card-title">{props.datos.comentario}</h5>
+          <h5 className="card-title">{props.datos.comment}</h5>
           <p className="card-text"></p>
           <span id="btnComentar" className="btn btn-primary">
-            {props.datos.fechaComentario}
+            {props.datos.created_at}
           </span>
         </div>
       </div>

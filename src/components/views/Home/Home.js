@@ -7,10 +7,21 @@ import PostIndividual from "./PostIndividual";
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/post")
+    let myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      "Bearer 1|GnNHEjVzu4rKaSRfGG14lnFha7kO8qXTeEJ2RjIK"
+    );
+
+    let requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch("http://localhost:8000/api/post", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setPosts(result);

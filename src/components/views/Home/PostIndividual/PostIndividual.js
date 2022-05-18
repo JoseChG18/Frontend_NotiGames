@@ -12,18 +12,11 @@ function PostIndividual(props) {
       {/* Inicio Contenedor Mensajes del Foro  */}
       <div className="mensajeForo">
         <div className="titulo text-center">
-          <Link
-            to={"/post/" + props.datos.id}
-            state={{ id: props.datos.id }}
-          >
-            {props.datos.titulo}
-          </Link>
+          <Link to={"/post/" + props.datos.id}>{props.datos.tittle}</Link>
         </div>
         {/* Inicio Cuerpo del Mensaje Foro */}
-        <div
-          className={flecha ? "contenido hidden" : "contenido show"}
-        >
-          {props.datos.texto}
+        <div className={flecha ? "contenido hidden" : "contenido show"}>
+          {props.datos.description}
         </div>
         {/* Fin Cuerpo del Mensaje Foro */}
 
@@ -33,7 +26,9 @@ function PostIndividual(props) {
             onClick={() => cambioFlecha(!flecha)}
             id={flecha ? "mas" : "menos"} // mas || menos
             data-dir={flecha ? "down" : "up"} // down || up
-            className={flecha ? "arrow down align-self-end" : "arrow up align-self-end"} // down || arrow up
+            className={
+              flecha ? "arrow down align-self-end" : "arrow up align-self-end"
+            } // down || arrow up
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,11 +47,11 @@ function PostIndividual(props) {
         {/* Inicio Contenedor-footer */}
         <div className="container-footer">
           {/* Inicio Contenedor-Fecha */}
-          <div className="fechaPublicacion">{props.datos.fechaPost}</div>
+          <div className="fechaPublicacion">{props.datos.created_at}</div>
           {/* Fin Contenedor-Fecha */}
 
           {/* Inicio Contenedor-Firma */}
-          <div className="firma">{props.datos.idUsuario}</div>
+          <div className="firma">{props.datos.user_id}</div>
           {/* Fin Contenedor-Firma */}
         </div>
         {/* Fin Contenedor-footer */}
