@@ -13,3 +13,28 @@ footer div a {
   text-decoration: underline;
   font-weight: bold;
 } */
+@font-face {
+  font-family: tituloNoti;
+  src: url("../../../font/HANDMADE_ANIMATION.otf");
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-top: 1rem;
+  background: #e00000;
+  background: -webkit-gradient(linear, left top, right top, from(#e00000), color-stop(50%, maroon), to(black));
+  background: linear-gradient(90deg, #e00000 0%, maroon 50%, black 100%);
+}
+
+footer div {
+  color: white;
+}
+
+footer div a {
+  color: white;
+  text-decoration: underline;
+  font-weight: bold;
+}
+/*# sourceMappingURL=Footer.css.map */

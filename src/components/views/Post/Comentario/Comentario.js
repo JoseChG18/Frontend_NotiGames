@@ -1,15 +1,17 @@
+import "./Comentario.scss";
+
 function Comentario(props) {
 
-  const deleteComentario = () =>{
-    
+  const deleteComentario = () => {
+
     let requestOptions = {
       method: 'DELETE',
       redirect: 'follow'
     };
 
-    fetch("http://localhost:8000/api/comentario/"+props.datos.id , requestOptions)
-    .then((response) => response.json())
-    .then((result) => console.log(result))
+    fetch("http://localhost:8000/api/comentario/" + props.datos.id, requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
   }
 
   return (
@@ -17,15 +19,15 @@ function Comentario(props) {
       <div className="card mb-2">
         <div className="card-header">
           {/* Si eres dueño o Admin */}
-            <button
-              onClick={() => deleteComentario()}
-              className="btn btn-danger my-2 float-end"
-              id="btnComentar"
-              type="button"
-              name="idComentario"
-            >
-              X
-            </button>
+          <button
+            onClick={() => deleteComentario()}
+            className="btn btn-danger my-2 float-end"
+            id="btnComentar"
+            type="button"
+            name="idComentario"
+          >
+            X
+          </button>
 
           <h5 className="pt-2">
             <strong>{props.datos.idUser}</strong>

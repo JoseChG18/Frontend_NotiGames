@@ -1,3 +1,4 @@
+import "../Post/Post.scss";
 import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -5,7 +6,7 @@ import Comentario from "./Comentario";
 import { Link, useParams } from "react-router-dom";
 
 function Post() {
-  
+
   const [isLoading, setIsLoading] = useState(true);
 
   const id = useParams().id;
@@ -42,7 +43,7 @@ function Post() {
         console.log(result);
       });
   };
-  
+
   const [post, setPost] = useState(null);
   useEffect(() => {
     fetch("http://localhost:8000/api/post/" + id)

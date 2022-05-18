@@ -1,4 +1,4 @@
-import "./Register.css";
+import "./Register.scss";
 import Header from "../Header";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
@@ -15,35 +15,35 @@ function Register() {
   const [provincia, setProvincia] = useState("");
   const [ciudad, setCiudad] = useState("");
 
-  const onChangeUsuario = (e) =>{
+  const onChangeUsuario = (e) => {
     const usuario = e.target.value;
     setUsuario(usuario)
   }
-  const onChangePassword = (e) =>{
+  const onChangePassword = (e) => {
     const password = e.target.value;
     setPassword(password)
   }
-  const onChangeNombre = (e) =>{
+  const onChangeNombre = (e) => {
     const nombre = e.target.value;
     setNombre(nombre)
   }
-  const onChangeApellidos = (e) =>{
+  const onChangeApellidos = (e) => {
     const apellidos = e.target.value;
     setApellidos(apellidos)
   }
-  const onChangeEmail = (e) =>{
+  const onChangeEmail = (e) => {
     const email = e.target.value;
     setEmail(email)
   }
-  const onChangeTelefono = (e) =>{
+  const onChangeTelefono = (e) => {
     const telefono = e.target.value;
     setTelefono(telefono)
   }
-  const onChangeProvincia = (e) =>{
+  const onChangeProvincia = (e) => {
     const provincia = e.target.value;
     setProvincia(provincia)
   }
-  const onChangeCiudad = (e) =>{
+  const onChangeCiudad = (e) => {
     const ciudad = e.target.value;
     setCiudad(ciudad)
   }
@@ -51,7 +51,7 @@ function Register() {
     <div id="load">
       <Header />
       {/* Inicio Contenedor registro */}
-      <form action="" method="post">
+      <form action="" method="post" className="contRegister d-flex justify-content-center">
         <div className="container rounded bg-white mt-0 mb-0">
           <div className="row">
             <div className="col-md-4 border-end">

@@ -1,3 +1,123 @@
-.container{
-    background-color: rgb(239, 240, 245); 
+@font-face {
+  font-family: tituloNoti;
+  src: url("../../../font/HANDMADE_ANIMATION.otf");
 }
+
+.contenido {
+  font-size: 1.5rem;
+  padding-top: 1.5rem;
+  margin-left: 2.2rem;
+  margin-right: 2.2rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.contenido.show {
+  max-height: none;
+}
+
+.contenido.hidden {
+  max-height: 6rem;
+}
+
+.arrow.show {
+  display: block;
+}
+
+.arrow.hidden {
+  display: none;
+}
+
+.formuFiltrar {
+  background-color: #eff0f5 !important;
+  width: 40vh !important;
+  border-radius: 7%;
+}
+
+.butFilter {
+  background-color: #4d0b0b;
+  color: white;
+  border-color: black;
+}
+
+.butFilter:hover {
+  background-color: black;
+  border-color: black;
+}
+
+.mensajeForo {
+  border-radius: 1rem;
+  width: 60rem;
+  gap: 5px;
+  padding: 1rem;
+  margin: 10px;
+  background: #eff0f5;
+}
+
+.containerNoticia {
+  margin-bottom: 3rem;
+}
+
+.vermas {
+  background: #515e7c;
+  background: -webkit-gradient(linear, left bottom, left top, from(#515e7c), to(rgba(253, 187, 45, 0)));
+  background: linear-gradient(0deg, #515e7c 0%, rgba(253, 187, 45, 0) 100%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  height: 20px;
+  margin-left: auto;
+}
+
+#mas:link #mas:visited #mas:hover {
+  text-decoration: none;
+  color: black;
+}
+
+#menos:link #menos:visited #menos:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.mensajeForo:hover {
+  -webkit-transition: 0.75s;
+  transition: 0.75s;
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.nav-link {
+  color: #a02222;
+}
+
+.nav-link:hover {
+  color: #ff0000;
+}
+
+.btn-outline-primary {
+  color: black;
+  border-color: black;
+}
+
+.btn-outline-primary:hover {
+  background-color: black;
+  border-color: black;
+}
+
+div#div_file {
+  background-color: #721414 !important;
+  -webkit-box-shadow: 0px 3px 0px #290404 !important;
+          box-shadow: 0px 3px 0px #290404 !important;
+}
+
+div#div_file:hover {
+  background-color: #a02222 !important;
+  -webkit-transition: 0.55s;
+  transition: 0.55s;
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+/*# sourceMappingURL=EditPost.css.map */

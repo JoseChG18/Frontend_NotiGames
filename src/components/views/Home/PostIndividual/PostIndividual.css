@@ -50,19 +50,19 @@
 }
 
 .containerNoticia {
-  margin-bottom: 60px;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
 }
 
 .vermas {
   background: rgb(81, 94, 124);
-  background: linear-gradient(
-    0deg,
-    rgba(81, 94, 124, 1) 0%,
-    rgba(253, 187, 45, 0) 100%
-  );
+  background: linear-gradient(0deg,
+      rgba(81, 94, 124, 1) 0%,
+      rgba(253, 187, 45, 0) 100%);
   display: flex;
   justify-content: flex-end;
-  height: 20px;
+  height: 15px;
   margin-left: auto;
 }
 

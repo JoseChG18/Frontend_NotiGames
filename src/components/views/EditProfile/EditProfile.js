@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./EditProfile.css";
+import "./EditProfile.scss";
 import Header from "../Header";
 import Footer from "../Footer";
 import { Link, useParams } from "react-router-dom";
 
 function EditProfile(props) {
-  
+
   const id = useParams().id;
   const [profile, setProfile] = useState([]);
 
@@ -84,7 +84,7 @@ function EditProfile(props) {
                     </div>
                   </div>
                   <div className="row mt-2">
-                  <div className="col-md-12">
+                    <div className="col-md-12">
                       <label className="labels">Email</label>
                       <input
                         type="text"
@@ -131,7 +131,7 @@ function EditProfile(props) {
                       type="submit"
                       value="Editar"
                     />
-                    <Link to={"/profile/"+id} className="btn btn-primary profile-button">Cancelar</Link>
+                    <Link to={"/profile/" + id} className="btn btn-primary profile-button">Cancelar</Link>
                   </div>
                 </div>
               </div>
@@ -140,7 +140,7 @@ function EditProfile(props) {
         </div>
       </form>
       {/* Fin Contenedor Editar-Perfil */}
-      <Footer/>
+      <Footer />
     </div>
   );
 }

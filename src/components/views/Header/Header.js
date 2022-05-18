@@ -5,7 +5,7 @@
 /**
  * https://getbootstrap.com/docs/5.0/components/navbar/
  */
-import "./Header.css";
+import "./Header.scss";
 import logo from "../../../images/logo.png";
 import { Link } from "react-router-dom";
 

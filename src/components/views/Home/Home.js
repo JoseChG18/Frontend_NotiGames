@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
+import "./Home.css";
 import PostIndividual from "./PostIndividual";
 
 function Home() {
@@ -29,9 +30,11 @@ function Home() {
     return (
       <div>
         <Header />
-        {posts.map((post) => (
-          <PostIndividual key={post.id} datos={post} />
-        ))}
+        <div className="grandContPosts">
+          {posts.map((post) => (
+            <PostIndividual key={post.id} datos={post} />
+          ))}
+        </div>
         <Footer />
       </div>
     );

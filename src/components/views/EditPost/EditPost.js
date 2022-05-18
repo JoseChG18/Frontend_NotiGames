@@ -1,12 +1,12 @@
 import React from "react";
-import "./EditPost.css";
+import "./EditPost.scss";
 import Header from "../Header";
 import Footer from "../Footer";
 import { Link, useParams } from "react-router-dom";
 
 function EditPost() {
   const id = useParams().id;
-  
+
   return (
     <div className="m-0 row justify-content-center">
       <Header />
@@ -68,7 +68,7 @@ function EditPost() {
             value="UserA"
           />
         </div>
-        
+
         <button
           name="modificar"
           type="submit"
@@ -76,10 +76,10 @@ function EditPost() {
         >
           Modificar
         </button>
-        <Link to={"/post/"+id} 
-        className="btn btn-outline-danger mt-2 mx-1 float-end">Cancelar</Link>
+        <Link to={"/post/" + id}
+          className="btn btn-outline-danger mt-2 mx-1 float-end">Cancelar</Link>
       </form>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

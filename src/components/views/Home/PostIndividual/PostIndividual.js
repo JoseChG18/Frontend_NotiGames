@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function PostIndividual(props) {
   const [flecha, cambioFlecha] = useState(true);
-  
+
   return (
     // Inicio Contenedor Noticias
     <div className="containerNoticia">
@@ -30,10 +30,10 @@ function PostIndividual(props) {
         {/* Inicio Flecha ver mas */}
         <div className="vermas">
           <span
-            onClick={ () => cambioFlecha(!flecha)}
+            onClick={() => cambioFlecha(!flecha)}
             id={flecha ? "mas" : "menos"} // mas || menos
             data-dir={flecha ? "down" : "up"} // down || up
-            className={flecha ? "arrow down" : "arrow up"} // down || arrow up
+            className={flecha ? "arrow down align-self-end" : "arrow up align-self-end"} // down || arrow up
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
