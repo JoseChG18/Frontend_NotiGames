@@ -3,6 +3,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from 'axios';
 
 function Register() {
 
@@ -46,6 +47,31 @@ function Register() {
   const onChangeCiudad = (e) => {
     const ciudad = e.target.value;
     setCiudad(ciudad)
+  }
+
+  const registrarse = () => {
+    let data = new FormData()
+    data.append("nombre" , nombre)
+    data.append("apellidos", apellidos)
+    data.append("telefono",telefono)
+    data.append("ciudad",ciudad)
+    data.append("provincia",provincia)
+    data.append("email",email)
+    data.append("username",usuario)
+    data.append("password",password)
+
+    var config = {
+      method: 'post',
+      url: "http://localhost:8000/api/register", 
+      data : data,
+      mode: 'no-cors',
+      headers: { 
+        "Accept" : "*/*",
+      }
+    };
+    axios(config)
+    .then((response) => console.log(JSON.stringify(response.data)))
+    .catch((error) => console.log(error));
   }
   return (
     <div id="load">
@@ -168,11 +194,11 @@ function Register() {
                   </div>
                 </div>
                 <div className="mt-5 text-center">
-                  <input
+                  <button
+                    onClick={() => registrarse()}
                     className="btn btn-primary profile-button"
-                    type="submit"
-                    value="Registrarse"
-                  />
+                    type="button"
+                  >Registrarse</button>
                 </div>
               </div>
             </div>

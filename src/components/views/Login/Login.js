@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
 import { useState } from "react";
+import axios from "axios";
 
 function Login() {
   const [usuario, setUsuario] = useState("");
@@ -17,13 +18,46 @@ function Login() {
     const password = e.target.value;
     setPassword(password);
   };
+
+  const inicioSesion = () => {
+    axios.defaults.withCredentials = true;
+    axios.get("http://localhost:3000/sanctum/csrf-cookie").then(
+      (response) => {
+        axios.post('http://localhost:3000/api/login',{
+          usuario : usuario,
+          password : password  
+        })
+        .then((response) => {
+          response.json()
+        })
+        .then((result) => console.log(result))
+      }
+    )
+    // let formData = new FormData()
+
+    // formData.append("usuario",usuario)
+    // formData.append("password",password)
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Accept", "pplication/json");
+
+    // let request = {
+    //   method: "post",
+    //   body: formData,
+    //   headers: myHeaders,
+    //   mode: 'no-cors'
+    // }
+
+    // fetch("http://localhost:8000/api/login", request)
+    // .then((response) => response.json())
+    // .then((result) => console.log(result))
+    // .catch((e) => console.log(e))
+  }
   return (
     <div className="main">
       <Header />
       <div className="loginCenter">
         <form
-          action="http://localhost:8000/api/login"
-          method="post"
           className="formularioLoginClass"
         >
           <h2 className="text-center">NotiGames</h2>
@@ -53,7 +87,7 @@ function Login() {
               onChange={onChangePassword}
             />
           </div>
-          <button type="submit" className="btn my-2 btn-primary">
+          <button onClick={() => inicioSesion()} type="button" className="btn my-2 btn-primary">
             Iniciar Sesion
           </button>
           <Link to={"/register"} className="btn my-2 btn-primary">
