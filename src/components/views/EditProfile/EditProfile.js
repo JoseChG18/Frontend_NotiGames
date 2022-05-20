@@ -2,24 +2,117 @@ import React, { useEffect, useState } from "react";
 import "./EditProfile.scss";
 import Header from "../Header";
 import Footer from "../Footer";
+import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
 function EditProfile(props) {
-  const id = useParams().id;
+  // const id = useParams().id;
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/user/" + id)
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    fetch("http://localhost:8000/api/user/" + localStorage.getItem("id"), requestOptions)
       .then((response) => response.json())
       .then((result) => setProfile(result));
-  }, [id]);
+  }, []);
+  const [usuario, setUsuario] = useState("");
+  const [password, setPassword] = useState("");
+  const [nombre, setNombre] = useState(profile.nombre);
+  const [apellidos, setApellidos] = useState(profile.apellidos);
+  const [email, setEmail] = useState(profile.email);
+  const [telefono, setTelefono] = useState(profile.telefono);
+  const [provincia, setProvincia] = useState(profile.provincia);
+  const [ciudad, setCiudad] = useState(profile.ciudad);
+
+  const onChangeUsuario = (e) => {
+    const usuario = e.target.value;
+    console.log(e.target.value)
+    setUsuario(usuario)
+  }
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password)
+  }
+  const onChangeNombre = (e) => {
+    const nombre = e.target.value;
+    setNombre(nombre)
+  }
+  const onChangeApellidos = (e) => {
+    const apellidos = e.target.value;
+    setApellidos(apellidos)
+  }
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email)
+  }
+  const onChangeTelefono = (e) => {
+    const telefono = e.target.value;
+    setTelefono(telefono)
+  }
+  const onChangeProvincia = (e) => {
+    const provincia = e.target.value;
+    setProvincia(provincia)
+  }
+  const onChangeCiudad = (e) => {
+    const ciudad = e.target.value;
+    setCiudad(ciudad)
+  }
+
+  
+
+  const actualizaPerfil = () => {
+    // peticion para actualizar perfil
+    let formData = new FormData();
+
+    formData.append("nombre", nombre)
+    formData.append("apellidos", apellidos)
+    formData.append("telefono", telefono)
+    formData.append("provincia", provincia)
+    formData.append("ciudad", ciudad)
+    formData.append("email", email)
+    formData.append("username", usuario)
+    formData.append("password", password)
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+
+    // falta pasar el header que es para saber si esta autentificado
+    axios.defaults.withCredentials = true;
+    axios
+      .put("http://localhost:8000/api/user/" + localStorage.getItem("id"), {
+        nombre: nombre,
+        apellidos: apellidos,
+        telefono: telefono,
+        provincia : provincia,
+        ciudad:ciudad,
+        email: email,
+        username: usuario,
+        password: password,
+      }, myHeaders)
+      .then((response) => {
+        console.log(response.data.data.id);
+      });
+
+    // fetch("http://localhost:8000/api/user/"+localStorage.getItem("id"),requestOptions)
+    // .then( (response) => response.json())
+    // .then( (result) => console.log(result))
+    
+  }
+
 
   return (
     <div id="load">
       <Header />
 
       {/* Inicio Contenedor Editar-Perfil */}
-      <form action="" method="post">
+      <form>
         <div className="simu-body d-flex justify-content-center aling-self-center">
           <div className="container rounded bg-white mt-0 mb-0">
             <div className="row">
@@ -46,7 +139,8 @@ function EditProfile(props) {
                         className="form-control"
                         name="user"
                         placeholder="Usuario"
-                        value={profile.usuario}
+                        defaultValue={profile.username}
+                        onChange={onChangeUsuario}
                       />
                     </div>
                     <div className="col-md-12">
@@ -56,7 +150,8 @@ function EditProfile(props) {
                         className="form-control"
                         name="pass"
                         placeholder="Ingrese su Contraseña"
-                        value=""
+                        defaultValue={profile.password}
+                        onChange={onChangePassword}
                       />
                     </div>
                   </div>
@@ -68,7 +163,8 @@ function EditProfile(props) {
                         className="form-control"
                         name="nombre"
                         placeholder="Nombre"
-                        value={profile.nombre}
+                        defaultValue={profile.nombre}
+                        onChange={onChangeNombre}
                       />
                     </div>
                     <div className="col-md-6">
@@ -78,7 +174,8 @@ function EditProfile(props) {
                         className="form-control"
                         name="apellidos"
                         placeholder="Apellidos"
-                        value={profile.apellidos}
+                        defaultValue={profile.apellidos}
+                        onChange={onChangeApellidos}
                       />
                     </div>
                   </div>
@@ -90,7 +187,8 @@ function EditProfile(props) {
                         className="form-control"
                         name="email"
                         placeholder="example@gmail.com"
-                        value={profile.email}
+                        defaultValue={profile.email}
+                        onChange={onChangeEmail}
                       />
                     </div>
                     <div className="col-md-12">
@@ -100,7 +198,8 @@ function EditProfile(props) {
                         className="form-control"
                         name="telefono"
                         placeholder="Ingrese el numero de telefono"
-                        value={profile.telefono}
+                        defaultValue={profile.telefono}
+                        onChange={onChangeTelefono}
                       />
                     </div>
                     <div className="col-md-12">
@@ -110,7 +209,8 @@ function EditProfile(props) {
                         className="form-control"
                         name="provincia"
                         placeholder="Ingrese la Provincia"
-                        value={profile.provincia}
+                        defaultValue={profile.provincia}
+                        onChange={onChangeProvincia}
                       />
                     </div>
                     <div className="col-md-12">
@@ -120,18 +220,22 @@ function EditProfile(props) {
                         className="form-control"
                         name="ciudad"
                         placeholder="Ciudad"
-                        value={profile.ciudad}
+                        defaultValue={profile.ciudad}
+                        onChange={onChangeCiudad}
                       />
                     </div>
                   </div>
                   <div className="mt-5 text-center">
-                    <input
+                    <Link
+                      to={"/profile/" + localStorage.getItem("id")}
+                      onClick={() => actualizaPerfil()}
                       className="btn btn-primary profile-button"
                       type="submit"
-                      value="Editar"
-                    />
+                    >
+                    Editar
+                    </Link>
                     <Link
-                      to={"/profile/" + id}
+                      to={"/profile/" + localStorage.getItem("id")}
                       className="btn btn-primary profile-button"
                     >
                       Cancelar

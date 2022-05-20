@@ -10,18 +10,7 @@ function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    let myHeaders = new Headers();
-    myHeaders.append(
-      "Authorization",
-      "Bearer 1|GnNHEjVzu4rKaSRfGG14lnFha7kO8qXTeEJ2RjIK"
-    );
-
-    let requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch("http://localhost:8000/api/post", requestOptions)
+    fetch("http://localhost:8000/api/post")
       .then((response) => response.json())
       .then((result) => {
         setPosts(result);

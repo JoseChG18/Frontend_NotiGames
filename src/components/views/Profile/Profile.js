@@ -9,14 +9,22 @@ import Estadisticas from "./Estadisticas";
 import { Link, useParams } from "react-router-dom";
 
 function Profile() {
-  const id = useParams().id;
+  // const id = localStorage.getItem("id")
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/user/" + id)
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    fetch("http://localhost:8000/api/user/" + localStorage.getItem("id"), requestOptions)
       .then((response) => response.json())
       .then((result) => setProfile(result));
-  }, [id]);
+  }, []);
 
   return (
     <div>
@@ -38,7 +46,7 @@ function Profile() {
                         <h6 className="mb-0">Nombre Completo</h6>
                       </div>
                       <div className="col-sm-9 text-secondary">
-                        {profile.name + " " + profile.surname}
+                        {profile.nombre + " " + profile.apellidos}
                       </div>
                     </div>
                     <hr />

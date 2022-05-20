@@ -10,6 +10,22 @@ import logo from "../../../images/logo.png";
 import { Link } from "react-router-dom";
 
 function Header(props) {
+  const id = localStorage.getItem("id");
+  const logout = () => {
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    fetch("http://localhost:8000/api/logout", requestOptions)
+      .then((response) => {console.log(response.json());
+      delete localStorage.token;
+      delete localStorage.id})
+  }
   return (
     <nav className="navbar navbar-light navbar-expand-lg">
       <div className="container-fluid">
@@ -49,12 +65,12 @@ function Header(props) {
 
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <Link to={"/profile"} className="dropdown-item">
+                  <Link to={"/profile/"+id} className="dropdown-item">
                     Perfil
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/login"} className="dropdown-item">
+                  <Link to={"/login"} onClick={() => logout()} className="dropdown-item">
                     Cerrar Sesión
                   </Link>
                 </li>
