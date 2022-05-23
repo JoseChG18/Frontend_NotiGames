@@ -6,26 +6,32 @@ import Footer from "../Footer";
 
 import FotoPerfil from "./FotoPerfil";
 import Estadisticas from "./Estadisticas";
-import { Link, useParams } from "react-router-dom";
+import { Link ,useParams} from "react-router-dom";
+import axios from "axios";
 
 function Profile() {
-  // const id = localStorage.getItem("id")
   const [profile, setProfile] = useState([]);
-
+  const id = useParams("id").id;
+  
   useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", localStorage.getItem("token"));
+    axios.get("api/user/"+ id)
+    .then((result) => setProfile(result.data))
+  }, [id]);
 
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    fetch("http://localhost:8000/api/user/" + localStorage.getItem("id"), requestOptions)
-      .then((response) => response.json())
-      .then((result) => setProfile(result));
-  }, []);
-
+  let propietario = ""
+  if (JSON.parse(localStorage.getItem("user")).id.toString() === id) {
+    propietario = (
+      <div className="btn-edit-profile">
+        <div className="row">
+          <div className="col-sm-3 ">
+            <Link to={"edit"} className="btn btn-outline-primary">
+              Editar
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
   return (
     <div>
       <Header />
@@ -95,15 +101,7 @@ function Profile() {
                       </div>
                     </div>
                     <hr />
-                    <div className="btn-edit-profile">
-                      <div className="row">
-                        <div className="col-sm-3 ">
-                          <Link to={"edit"} className="btn btn-outline-primary">
-                            Editar
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
+                    {propietario}
                   </div>
                 </div>
               </div>

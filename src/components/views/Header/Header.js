@@ -7,25 +7,71 @@
  */
 import "./Header.scss";
 import logo from "../../../images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Header(props) {
-  const id = localStorage.getItem("id");
-  const logout = () => {
-
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", localStorage.getItem("token"));
-
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    fetch("http://localhost:8000/api/logout", requestOptions)
-      .then((response) => {console.log(response.json());
-      delete localStorage.token;
-      delete localStorage.id})
+  const navigate = useNavigate();
+  const id = (JSON.parse(localStorage.getItem("user"))) ? JSON.parse(localStorage.getItem("user")).id : "";
+  const logout = (e) => {
+    e.preventDefault();
+    axios.post("api/logout").then( (response) => {
+      if (response.data.status === 200) {
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("user");
+        alert(response.data.message);
+        navigate("/");
+      } 
+    }
+    )
   }
+
+  let AuthContext = "";
+
+  if(localStorage.getItem('auth_token')){
+    AuthContext  =  ( <li className="nav-item dropdown">
+      <a
+        href="/"
+        className="nav-link active dropdown-toggle"
+        id="navbarDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        User
+      </a>
+
+      <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li>
+          <Link to={"/profile/"+id} className="dropdown-item">
+            Perfil
+          </Link>
+        </li>
+        <li>
+          <button type="button" onClick={logout} className="dropdown-item">
+            Cerrar Sesión
+          </button>
+        </li>
+      </ul>
+    </li>
+    )
+  }else{
+    AuthContext  =  (
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <Link to={"/login"} className="nav-link">
+            Login
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to={"/register"} className="nav-link">
+            Register
+          </Link>
+        </li>
+      </ul>
+    )
+  }
+
   return (
     <nav className="navbar navbar-light navbar-expand-lg">
       <div className="container-fluid">
@@ -51,31 +97,7 @@ function Header(props) {
                 Inicio
               </Link>
             </li>
-            <li className="nav-item dropdown">
-              <a
-                href="/"
-                className="nav-link active dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                User
-              </a>
-
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <Link to={"/profile/"+id} className="dropdown-item">
-                    Perfil
-                  </Link>
-                </li>
-                <li>
-                  <Link to={"/login"} onClick={() => logout()} className="dropdown-item">
-                    Cerrar Sesión
-                  </Link>
-                </li>
-              </ul>
-            </li>
+            {AuthContext}
           </ul>
           <div className="d-flex filterIdClass">
             {/**<ul>

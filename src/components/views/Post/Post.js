@@ -3,70 +3,78 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import Comentario from "./Comentario";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function Post() {
+
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
 
   const id = useParams().id;
 
-  // const [comentarios, setComentarios] = useState(null);
+  const [post, setPost] = useState({
+    errores: "",
+  });
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8000/api/comment")
-  //     .then((response) => response.json())
-  //     .then((result) => setComentarios(result));
-  // }, []);
+  useEffect(() => {
+    axios.get("api/post/"+ id).then((response) => {
+      setPost(response.data);
+      setIsLoading(false);
+    })
+  }, [id]);
 
   const [comentario, setComentario] = useState("");
 
   const onChangeComentario = (e) => {
+    e.persist();
     setComentario(e.target.value);
   };
 
   const deletePost = () => {
-    let requestOptions = {
-      method: "DELETE",
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:8000/api/post/" + id, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        // setComentarios(result);
-        console.log(result);
-      });
+    axios.delete("api/post/"+id).then((response) => {
+      if (response.data.status === 200) {
+        alert(response.data.message)
+        navigate("/");
+      }
+    })
   };
 
-  const crearComentario = () => {
-    var formdata = new FormData();
-    formdata.append("comentario", comentario);
-    formdata.append("idPost", id);
-    formdata.append("idUser", "1");
-    let requestOptions = {
-      method: "POST",
-      body: formdata,
-      redirect: "follow",
-    };
+  const crearComentario = (e) => {
+    e.preventDefault();
+    const data = {
+      comment: comentario,
+      user_id: JSON.parse(localStorage.getItem("user")).id,
+      post_id: id,
+    }
 
-    fetch("http://localhost:8000/api/comment", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        // setComentarios(result);
-        console.log(result);
-      });
+    axios.post("api/comment",data)
+    .then((response) => {
+      if (response.data.status === 200) {
+        axios.get("api/post/"+ id).then((response) => setPost(response.data))
+      }else{
+        setPost({...post , errores: response.data.errores})
+      }
+    })
   };
 
-  const [post, setPost] = useState(null);
-  useEffect(() => {
-    fetch("http://localhost:8000/api/post/" + id)
-      .then((response) => response.json())
-      .then((result) => {
-        setPost(result);
-        setIsLoading(false);
-      });
-  }, [id]);
-
+  let element = (
+    <div>
+      <button 
+        onClick={deletePost}
+        className="btn btn-danger my-2"
+        id="btnComentar"
+        type="submit"
+      >
+        X
+      </button>
+      <Link to={"edit"} className="btn btn-danger my-2">
+        Modificar
+      </Link>
+    </div>
+  );
+  
   if (isLoading) {
     return (
       <div>
@@ -93,17 +101,7 @@ function Post() {
               {/* Fin Contenedor-Firma */}
             </div>
             {/* Si eres Dueño del post o Admin*/}
-            <button
-              onClick={() => deletePost()}
-              className="btn btn-danger my-2"
-              id="btnComentar"
-              type="submit"
-            >
-              X
-            </button>
-            <Link to={"edit"} className="btn btn-danger my-2">
-              Modificar
-            </Link>
+            { (JSON.parse(localStorage.getItem("user")).id === post.user.id) ? element : "" }
             {/* Fin Contenedor-footer */}
             {/* Inicio Titulo noticia */}
             <h1 id="tNoticia">{post.tittle}</h1>
@@ -124,6 +122,7 @@ function Post() {
                   value={comentario}
                   onChange={onChangeComentario}
                 ></textarea>
+                <span className="text-danger">{post.errores ? post.errores.comment : ""}</span>
               </div>
               <div className="button">
                 <button

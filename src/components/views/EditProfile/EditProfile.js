@@ -3,107 +3,49 @@ import "./EditProfile.scss";
 import Header from "../Header";
 import Footer from "../Footer";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function EditProfile(props) {
-  // const id = useParams().id;
-  const [profile, setProfile] = useState([]);
+  const id = useParams().id;
+
+  const navigate = useNavigate();
+
+  const [updateInput, setUpdate] = useState({
+    errores: "",
+  })
 
   useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", localStorage.getItem("token"));
+    axios.get("api/user/"+ id)
+    .then((result) => setUpdate(result.data))
+  }, [id]);
 
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    fetch("http://localhost:8000/api/user/" + localStorage.getItem("id"), requestOptions)
-      .then((response) => response.json())
-      .then((result) => setProfile(result));
-  }, []);
-  const [usuario, setUsuario] = useState("");
-  const [password, setPassword] = useState("");
-  const [nombre, setNombre] = useState(profile.nombre);
-  const [apellidos, setApellidos] = useState(profile.apellidos);
-  const [email, setEmail] = useState(profile.email);
-  const [telefono, setTelefono] = useState(profile.telefono);
-  const [provincia, setProvincia] = useState(profile.provincia);
-  const [ciudad, setCiudad] = useState(profile.ciudad);
-
-  const onChangeUsuario = (e) => {
-    const usuario = e.target.value;
-    console.log(e.target.value)
-    setUsuario(usuario)
-  }
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password)
-  }
-  const onChangeNombre = (e) => {
-    const nombre = e.target.value;
-    setNombre(nombre)
-  }
-  const onChangeApellidos = (e) => {
-    const apellidos = e.target.value;
-    setApellidos(apellidos)
-  }
-  const onChangeEmail = (e) => {
-    const email = e.target.value;
-    setEmail(email)
-  }
-  const onChangeTelefono = (e) => {
-    const telefono = e.target.value;
-    setTelefono(telefono)
-  }
-  const onChangeProvincia = (e) => {
-    const provincia = e.target.value;
-    setProvincia(provincia)
-  }
-  const onChangeCiudad = (e) => {
-    const ciudad = e.target.value;
-    setCiudad(ciudad)
+  const onChangeInputs = (e) => {
+    e.persist();
+    setUpdate({...updateInput, [e.target.name]: e.target.value})
   }
 
-  
-
-  const actualizaPerfil = () => {
+  const actualizaPerfil = (e) => {
+    e.preventDefault();
     // peticion para actualizar perfil
-    let formData = new FormData();
-
-    formData.append("nombre", nombre)
-    formData.append("apellidos", apellidos)
-    formData.append("telefono", telefono)
-    formData.append("provincia", provincia)
-    formData.append("ciudad", ciudad)
-    formData.append("email", email)
-    formData.append("username", usuario)
-    formData.append("password", password)
-
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", localStorage.getItem("token"));
-
-    // falta pasar el header que es para saber si esta autentificado
-    axios.defaults.withCredentials = true;
     axios
-      .put("http://localhost:8000/api/user/" + localStorage.getItem("id"), {
-        nombre: nombre,
-        apellidos: apellidos,
-        telefono: telefono,
-        provincia : provincia,
-        ciudad:ciudad,
-        email: email,
-        username: usuario,
-        password: password,
-      }, myHeaders)
+      .put("api/user/" + id, {
+        nombre: updateInput.nombre,
+        apellidos: updateInput.apellidos,
+        telefono: updateInput.telefono,
+        provincia : updateInput.provincia,
+        ciudad: updateInput.ciudad,
+        email: updateInput.email,
+        username: updateInput.username,
+        password: updateInput.password,
+      })
       .then((response) => {
-        console.log(response.data.data.id);
+        if (response.data.status === 200) {
+          alert("Usuario Actualizado correctamente");
+          navigate("/profile/" + id);
+        } else {
+          setUpdate({...updateInput , errores: response.data.errores})
+        }
       });
-
-    // fetch("http://localhost:8000/api/user/"+localStorage.getItem("id"),requestOptions)
-    // .then( (response) => response.json())
-    // .then( (result) => console.log(result))
-    
   }
 
 
@@ -112,7 +54,7 @@ function EditProfile(props) {
       <Header />
 
       {/* Inicio Contenedor Editar-Perfil */}
-      <form>
+      <form onSubmit={actualizaPerfil}>
         <div className="simu-body d-flex justify-content-center aling-self-center">
           <div className="container rounded bg-white mt-0 mb-0">
             <div className="row">
@@ -137,22 +79,24 @@ function EditProfile(props) {
                       <input
                         type="text"
                         className="form-control"
-                        name="user"
+                        name="username"
                         placeholder="Usuario"
-                        defaultValue={profile.username}
-                        onChange={onChangeUsuario}
+                        defaultValue={updateInput.username}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["username"]:""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Contraseña</label>
                       <input
                         type="password"
                         className="form-control"
-                        name="pass"
+                        name="password"
                         placeholder="Ingrese su Contraseña"
-                        defaultValue={profile.password}
-                        onChange={onChangePassword}
+                        defaultValue={updateInput.password}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["password"]:""}</span>
                     </div>
                   </div>
                   <div className="row mt-2">
@@ -163,9 +107,10 @@ function EditProfile(props) {
                         className="form-control"
                         name="nombre"
                         placeholder="Nombre"
-                        defaultValue={profile.nombre}
-                        onChange={onChangeNombre}
+                        defaultValue={updateInput.nombre}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["nombre"]:""}</span>
                     </div>
                     <div className="col-md-6">
                       <label className="labels">Apellidos</label>
@@ -174,9 +119,10 @@ function EditProfile(props) {
                         className="form-control"
                         name="apellidos"
                         placeholder="Apellidos"
-                        defaultValue={profile.apellidos}
-                        onChange={onChangeApellidos}
+                        defaultValue={updateInput.apellidos}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["apellidos"]:""}</span>
                     </div>
                   </div>
                   <div className="row mt-2">
@@ -187,9 +133,10 @@ function EditProfile(props) {
                         className="form-control"
                         name="email"
                         placeholder="example@gmail.com"
-                        defaultValue={profile.email}
-                        onChange={onChangeEmail}
+                        defaultValue={updateInput.email}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["email"]:""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Telefono movil</label>
@@ -198,9 +145,10 @@ function EditProfile(props) {
                         className="form-control"
                         name="telefono"
                         placeholder="Ingrese el numero de telefono"
-                        defaultValue={profile.telefono}
-                        onChange={onChangeTelefono}
+                        defaultValue={updateInput.telefono}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["telefono"]:""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Provincia</label>
@@ -209,9 +157,10 @@ function EditProfile(props) {
                         className="form-control"
                         name="provincia"
                         placeholder="Ingrese la Provincia"
-                        defaultValue={profile.provincia}
-                        onChange={onChangeProvincia}
+                        defaultValue={updateInput.provincia}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["provincia"]:""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Ciudad</label>
@@ -220,22 +169,18 @@ function EditProfile(props) {
                         className="form-control"
                         name="ciudad"
                         placeholder="Ciudad"
-                        defaultValue={profile.ciudad}
-                        onChange={onChangeCiudad}
+                        defaultValue={updateInput.ciudad}
+                        onChange={onChangeInputs}
                       />
+                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["ciudad"]:""}</span>
                     </div>
                   </div>
                   <div className="mt-5 text-center">
-                    <Link
-                      to={"/profile/" + localStorage.getItem("id")}
-                      onClick={() => actualizaPerfil()}
-                      className="btn btn-primary profile-button"
-                      type="submit"
-                    >
+                    <button className="btn btn-primary profile-button" type="submit">
                     Editar
-                    </Link>
+                    </button>
                     <Link
-                      to={"/profile/" + localStorage.getItem("id")}
+                      to={"/profile/" + id}
                       className="btn btn-primary profile-button"
                     >
                       Cancelar
