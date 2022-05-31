@@ -7,23 +7,22 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 function Post() {
-
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const id = useParams().id;
+  const idPost = useParams().id;
 
   const [post, setPost] = useState({
     errores: "",
   });
 
   useEffect(() => {
-    axios.get("api/post/"+ id).then((response) => {
+    axios.get("api/post/" + idPost).then((response) => {
       setPost(response.data);
       setIsLoading(false);
-    })
-  }, [id]);
+    });
+  }, [idPost]);
 
   const [comentario, setComentario] = useState("");
 
@@ -33,12 +32,12 @@ function Post() {
   };
 
   const deletePost = () => {
-    axios.delete("api/post/"+id).then((response) => {
+    axios.delete("api/post/" + idPost).then((response) => {
       if (response.data.status === 200) {
-        alert(response.data.message)
+        alert(response.data.message);
         navigate("/");
       }
-    })
+    });
   };
 
   const crearComentario = (e) => {
@@ -46,35 +45,32 @@ function Post() {
     const data = {
       comment: comentario,
       user_id: JSON.parse(localStorage.getItem("user")).id,
-      post_id: id,
-    }
+      post_id: idPost,
+    };
 
-    axios.post("api/comment",data)
-    .then((response) => {
+    axios.post("api/comment", data).then((response) => {
       if (response.data.status === 200) {
-        axios.get("api/post/"+ id).then((response) => setPost(response.data))
-      }else{
-        setPost({...post , errores: response.data.errores})
+        axios.get("api/post/" + idPost).then((response) => setPost(response.data));
+        setComentario("");
+      } else {
+        setPost({ ...post, errores: response.data.errores });
       }
-    })
+    });
   };
 
-  let element = (
-    <div>
-      <button 
-        onClick={deletePost}
-        className="btn btn-danger my-2"
-        id="btnComentar"
-        type="submit"
-      >
-        X
-      </button>
-      <Link to={"edit"} className="btn btn-danger my-2">
-        Modificar
-      </Link>
-    </div>
-  );
-  
+  const id_user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
+
+  const deleteComment = (comment) => {
+    axios.delete("api/comment/"+comment)
+      .then((response) => {
+        if (response.data.status === 200) {
+          axios.get("api/post/" + idPost).then((response) => setPost(response.data));
+        }else{
+          setPost({ ...post, errores: response.data.errores });
+        }
+      })
+  }
+
   if (isLoading) {
     return (
       <div>
@@ -101,7 +97,21 @@ function Post() {
               {/* Fin Contenedor-Firma */}
             </div>
             {/* Si eres Dueño del post o Admin*/}
-            { (JSON.parse(localStorage.getItem("user")).id === post.user.id) ? element : "" }
+            {id_user === post.user.id && (
+              <div>
+                <button
+                  onClick={deletePost}
+                  className="btn btn-danger my-2"
+                  id="btnComentar"
+                  type="submit"
+                >
+                  X
+                </button>
+                <Link to={"edit"} className="btn btn-danger my-2">
+                  Modificar
+                </Link>
+              </div>
+            )}
             {/* Fin Contenedor-footer */}
             {/* Inicio Titulo noticia */}
             <h1 id="tNoticia">{post.tittle}</h1>
@@ -112,33 +122,41 @@ function Post() {
           </div>
           {/* Fin noticia */}
           {/* Añadir Comentario */}
-          <form onSubmit={crearComentario}>
-            <div className="formContent justify-content-center">
-              <div className="my-2 col-5">
-                <textarea
-                  name="comentario"
-                  className="form-control"
-                  id="FormControlTextarea1"
-                  value={comentario}
-                  onChange={onChangeComentario}
-                ></textarea>
-                <span className="text-danger">{post.errores ? post.errores.comment : ""}</span>
+          {localStorage.getItem("auth_token") && (
+            <form onSubmit={crearComentario}>
+              <div className="formContent justify-content-center">
+                <div className="my-2 col-5">
+                  <textarea
+                    name="comentario"
+                    className="form-control"
+                    id="FormControlTextarea1"
+                    value={comentario}
+                    onChange={onChangeComentario}
+                  ></textarea>
+                  <span className="text-danger">
+                    {post.errores ? post.errores.comment : ""}
+                  </span>
+                </div>
+                <div className="button">
+                  <button
+                    type="submit"
+                    id="btnComentar"
+                    className="btn btn-primary"
+                  >
+                    Comentar
+                  </button>
+                </div>
               </div>
-              <div className="button">
-                <button
-                  type="submit"
-                  id="btnComentar"
-                  className="btn btn-primary"
-                >
-                  Comentar
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          )}
           {/* Fin Añadir Comentario */}
           {/* Inicio comentario */}
           {post.comments.map((comentario) => (
-            <Comentario key={comentario.id} datos={comentario} />
+            <Comentario
+              key={comentario.id}
+              onDelete={deleteComment}
+              datos={comentario}
+            />
           ))}
           {/* Fin comentario */}
         </div>
