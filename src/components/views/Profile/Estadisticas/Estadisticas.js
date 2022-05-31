@@ -1,65 +1,52 @@
-import React, { Component } from "react";
-import EstadisticaCSGO from "./EstadisticaCSGO";
-import EstadisticaLOL from "./EstadisticaLOL";
-import EstadisticaRL from "./EstadisticaRL";
-class Estadisticas extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
-      <div className="col-md-12">
-        <div className="card text-center">
-          <nav>
-            <div className="nav nav-tabs" id="nav-tab" role="tablist">
-              <button
-                className="nav-link active"
-                id="nav-lol-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-lol"
-                type="button"
-                role="tab"
-                aria-controls="nav-lol"
-                aria-selected="true"
-              >
-                League of Legends
-              </button>
-              <button
-                className="nav-link"
-                id="nav-cs-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-cs"
-                type="button"
-                role="tab"
-                aria-controls="nav-cs"
-                aria-selected="true"
-              >
-                Counter-Strike
-              </button>
-              <button
-                className="nav-link"
-                id="nav-rl-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-rl"
-                type="button"
-                role="tab"
-                aria-controls="nav-rl"
-                aria-selected="true"
-              >
-                Rocket League
-              </button>
-            </div>
-          </nav>
-          <div className="tab-content" id="nav-tabContent">
-            <EstadisticaLOL/>
-            <EstadisticaCSGO/>
-            <EstadisticaRL/>
+import React from "react";
+import { Link } from "react-router-dom";
+import EstadisticaNav from "./EstadisticaNav";
+import EstadisticaContent from "./EstadisticaContent";
+
+function Estadisticas (props) {
+
+  let juegos = [];
+  for (const juego in props.juegos) {
+    juegos.push(props.juegos[juego][0])
+  } 
+
+  let estadisticas = [];
+  for (const stat in props.estadisticas) {
+    estadisticas.push(props.estadisticas[stat])
+  } 
+  return (
+    <div className="col-md-12">
+      <div className="card text-center">
+        <nav>
+          <div className="nav nav-tabs" id="nav-tab" role="tablist">
+            <button
+              className="nav-link active"
+              id={"nav-home-tab"}
+              data-bs-toggle="tab"
+              data-bs-target={"#nav-home"}
+              type="button"
+              role="tab"
+              aria-controls={"nav-home"}
+              aria-selected="true"
+            >
+              HOME
+            </button>
+            {juegos.map((juego) => (
+              <EstadisticaNav key={juego.id} data={juego} />
+            ))}
           </div>
+        </nav>
+        <div className="tab-content" id="nav-tabContent">
+          <div className="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <Link to={"stats"} className="btn btn-outline-primary">Crear/Actualizar Estadisticas</Link>
+          </div>
+          {juegos.map((juego) => (
+            <EstadisticaContent key={juego.id} datos={estadisticas} juego={juego.id}/>
+          ))}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Estadisticas;

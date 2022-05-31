@@ -6,6 +6,7 @@ import Post from "./components/views/Post";
 import Register from "./components/views/Register";
 import EditProfile from "./components/views/EditProfile";
 import EditPost from "./components/views/EditPost";
+import EditStats from "./components/views/EditStats";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -32,6 +33,7 @@ function App() {
           <Route path="post/:id/edit" element={JSON.parse(localStorage.getItem("user")).id.toString() === ":id" ? <Navigate to={`/profile/${JSON.parse(localStorage.getItem("user")).id.toString()}`} /> : <EditPost />} /> 
         */}
         <Route path="profile/:id" element={<Profile />} />
+        <Route path="profile/:id/stats" element={<EditStats />} />
         <Route path="profile/:id/edit" element={<EditProfile />} />
       </Routes>
     </BrowserRouter>

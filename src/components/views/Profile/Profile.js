@@ -12,14 +12,16 @@ import axios from "axios";
 function Profile() {
   const [profile, setProfile] = useState([]);
   const id = useParams("id").id;
-  
-  useEffect(() => {
+
+   useEffect(() => {
     axios.get("api/user/"+ id)
     .then((result) => setProfile(result.data))
   }, [id]);
 
+  const idUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
+
   let propietario = ""
-  if (JSON.parse(localStorage.getItem("user")).id.toString() === id) {
+  if (idUser === id) {
     propietario = (
       <div className="btn-edit-profile">
         <div className="row">
@@ -105,7 +107,7 @@ function Profile() {
                   </div>
                 </div>
               </div>
-              <Estadisticas />
+              <Estadisticas estadisticas={profile.statistics} juegos={profile.games}/> 
             </div>
           </div>
         </div>
