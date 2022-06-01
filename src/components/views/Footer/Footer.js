@@ -6,6 +6,12 @@
  */
 import "./Footer.scss";
 
+/**
+ * Generacion de Footer.
+ * Esta funcion genera el apartado del footer.
+ * @return [cuerpo HTML] Retorna el cuerpo del html del footer.
+ */
+
 function Footer() {
   return (
     <footer className="text-center text-lg-start">

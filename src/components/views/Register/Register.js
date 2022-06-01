@@ -5,6 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
+/**
+ * Funcion que genera el contenedor Registro.
+ * @return [cuerpo HTML] Retorna el registro correcto del usuario en caso de que sea asi si no devolvera una serie de alertas para el usuario.
+ */
 function Register() {
   const navigate = useNavigate();
   const [registerInput, setRegister] = useState({

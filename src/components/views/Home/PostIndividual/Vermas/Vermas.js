@@ -1,3 +1,10 @@
+
+/**
+ * Funcion para generar las flechas y sus posiciones correspondientes.
+ * @param mixed props
+ * 
+ * @return [cuerpo HTML] Retorna el cuerpo del html en el cual se encuentra las flechas las cuales dependiendo de su estado tendran una posicion o otra.
+ */
 function Vermas(props) {
   if (props.estado) {
     return (

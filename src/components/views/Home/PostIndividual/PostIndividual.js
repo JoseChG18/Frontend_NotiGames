@@ -3,6 +3,14 @@ import Vermas from "./Vermas";
 import "./PostIndividual.css";
 import { Link } from "react-router-dom";
 
+/**
+ * Funcion Para cada POST.
+ * 
+ * Esta funcion muestra el conjunto del contenedor POST individualmente (forma el contenido interior de cada post)
+ * @param mixed props
+ * @return [cuerpo HTML] Retorna el cuerpo del contenedor POST.
+ */
+
 function PostIndividual(props) {
   const [flecha, cambioFlecha] = useState(true);
 

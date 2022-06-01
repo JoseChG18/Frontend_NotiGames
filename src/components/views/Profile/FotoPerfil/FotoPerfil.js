@@ -1,3 +1,8 @@
+/**
+ * Funcion que genera el contenedor Foto del Perfil.
+ * 
+ * @return [cuerpo HTML] Retorna la foto del perfil de cada usuario que tengan guardada en la bdd.
+ */
 function FotoPerfil() {
   return (
     // Edit de foto

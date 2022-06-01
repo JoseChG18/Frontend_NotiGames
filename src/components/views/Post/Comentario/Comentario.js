@@ -1,5 +1,13 @@
 import "./Comentario.scss";
 
+/**
+ * La funcion genera el componente del Comentario.
+ * 
+ * En esta funcion obtenemos el cuerpo del comentario el cual antes realiza unas operaciones pertinentes para obtener los datos de un JSON.
+ * @param mixed props
+ * 
+ * @return [cuerpo HTML] Retorna el cuerpo del contenedor HTML de los comentarios.
+ */
 function Comentario(props) {
 
   const deleteComentario = () => {

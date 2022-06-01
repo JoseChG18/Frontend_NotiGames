@@ -10,26 +10,33 @@ import logo from "../../../images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+/**
+ * Funcion contenedor Nav-bar.
+ * Esta funcion genera el contenedor navbar, el cual necesita verificar unas comprobaciones de usuario para verificar componentes de su interior.
+ * @param mixed props
+ * @return [cuerpo HTML] Retorna el cuerpo del html del contenedor navbar del usuario.
+ */
+
 function Header(props) {
   const navigate = useNavigate();
   const id = (JSON.parse(localStorage.getItem("user"))) ? JSON.parse(localStorage.getItem("user")).id : "";
   const logout = (e) => {
     e.preventDefault();
-    axios.post("api/logout").then( (response) => {
+    axios.post("api/logout").then((response) => {
       if (response.data.status === 200) {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("user");
         alert(response.data.message);
         navigate("/");
-      } 
+      }
     }
     )
   }
 
   let AuthContext = "";
 
-  if(localStorage.getItem('auth_token')){
-    AuthContext  =  ( <li className="nav-item dropdown">
+  if (localStorage.getItem('auth_token')) {
+    AuthContext = (<li className="nav-item dropdown">
       <a
         href="/"
         className="nav-link active dropdown-toggle"
@@ -43,7 +50,7 @@ function Header(props) {
 
       <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
         <li>
-          <Link to={"/profile/"+id} className="dropdown-item">
+          <Link to={"/profile/" + id} className="dropdown-item">
             Perfil
           </Link>
         </li>
@@ -55,8 +62,8 @@ function Header(props) {
       </ul>
     </li>
     )
-  }else{
-    AuthContext  =  (
+  } else {
+    AuthContext = (
       <ul className="navbar-nav">
         <li className="nav-item">
           <Link to={"/login"} className="nav-link">

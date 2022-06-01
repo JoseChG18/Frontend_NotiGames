@@ -6,6 +6,12 @@ import Comentario from "./Comentario";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
+/**
+ * Funcion que genera el contenedor del POST.
+ * 
+ * En esta fucion logramos generar el cuerpo del post, realizando unas operaciones antes contra los datos guardados de los usuarios y asi verificando todos los mismos.
+ * @return [cuerpo HTML] Retorna los POST generados de la pagina (obtenidos del almacen de datos BDD mediante la interconexion AXIOS (libreria de terceros.)).
+ */
 function Post() {
   const navigate = useNavigate();
 
@@ -61,11 +67,11 @@ function Post() {
   const id_user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
 
   const deleteComment = (comment) => {
-    axios.delete("api/comment/"+comment)
+    axios.delete("api/comment/" + comment)
       .then((response) => {
         if (response.data.status === 200) {
           axios.get("api/post/" + idPost).then((response) => setPost(response.data));
-        }else{
+        } else {
           setPost({ ...post, errores: response.data.errores });
         }
       })

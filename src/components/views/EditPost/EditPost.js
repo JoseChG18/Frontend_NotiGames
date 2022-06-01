@@ -4,6 +4,12 @@ import Header from "../Header";
 import Footer from "../Footer";
 import { Link, useParams } from "react-router-dom";
 
+/**
+ * Editar POST.
+ * Esta funcion genera la pagina de editar post.
+ * @return [cuerpo HTML] Retorna el cuerpo del html a la hora de Editar un post.
+ */
+
 function EditPost() {
   const id = useParams().id;
 

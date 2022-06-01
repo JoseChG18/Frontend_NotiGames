@@ -6,16 +6,21 @@ import Footer from "../Footer";
 
 import FotoPerfil from "./FotoPerfil";
 import Estadisticas from "./Estadisticas";
-import { Link ,useParams} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+
+/**
+ * Funcion que genera el Perfil del usuario.
+ * @return [cuerpo del HTML] Retorna el perfil del usuario que inicio sesion.
+ */
 
 function Profile() {
   const [profile, setProfile] = useState([]);
   const id = useParams("id").id;
-  
+
   useEffect(() => {
-    axios.get("api/user/"+ id)
-    .then((result) => setProfile(result.data))
+    axios.get("api/user/" + id)
+      .then((result) => setProfile(result.data))
   }, [id]);
 
   let propietario = ""

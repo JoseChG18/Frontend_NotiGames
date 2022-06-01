@@ -5,6 +5,13 @@ import Footer from "../Footer";
 import { useState } from "react";
 import axios from "axios";
 
+/**
+ * Funcion Genera el contenedor de Login para los usuarios.
+ * Esta funcion nos genera el contenedor de Login, con sus correspondientes datos.
+ * 
+ * @return [cuerpo HTML] Retorna si toda la verificacion del usuario es corresta el inicio del usuario a la pagina web. (home)
+ */
+
 function Login() {
   const navigate = useNavigate();
   const [loginInput, setLogin] = useState({
