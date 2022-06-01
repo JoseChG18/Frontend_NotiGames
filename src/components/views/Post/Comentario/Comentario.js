@@ -7,22 +7,25 @@ function Comentario(props) {
   };
 
   const id_user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
-
+  const isAdmin = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).admin : false;
+  let PropietarioAdmin = ""
+  if(props.datos.user_id === id_user || isAdmin)
+  {
+    PropietarioAdmin = (<button
+      onClick={deleteComentario}
+      className="btn btn-danger my-2 float-end"
+      id="btnComentar"
+      type="button"
+    >
+      X
+    </button>)
+  }
   return (
     <div className="comentario">
       <div className="card mb-2">
         <div className="card-header">
           {/* Si eres dueño o Admin */}
-          {props.datos.user_id === id_user && (
-            <button
-              onClick={deleteComentario}
-              className="btn btn-danger my-2 float-end"
-              id="btnComentar"
-              type="button"
-            >
-              X
-            </button>
-          )}
+          {PropietarioAdmin}
           <h5 className="pt-2">
             <strong>{props.datos.user_id}</strong>
           </h5>

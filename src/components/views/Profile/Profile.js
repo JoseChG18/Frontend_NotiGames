@@ -21,7 +21,7 @@ function Profile() {
   const idUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
 
   let propietario = ""
-  if (idUser === id) {
+  if (idUser.toString() === id) {
     propietario = (
       <div className="btn-edit-profile">
         <div className="row">

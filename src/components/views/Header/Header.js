@@ -11,52 +11,75 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Header(props) {
+
   const navigate = useNavigate();
-  const id = (JSON.parse(localStorage.getItem("user"))) ? JSON.parse(localStorage.getItem("user")).id : "";
+
+  const id = JSON.parse(localStorage.getItem("user"))
+    ? JSON.parse(localStorage.getItem("user")).id
+    : "";
+
   const logout = (e) => {
     e.preventDefault();
-    axios.post("api/logout").then( (response) => {
+    axios.post("api/logout").then((response) => {
       if (response.data.status === 200) {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("user");
-        alert(response.data.message);
+        // alert(response.data.message);
         navigate("/");
-      } 
-    }
-    )
+      }
+    });
+  };
+
+  const isAdmin = JSON.parse(localStorage.getItem("user"))
+    ? JSON.parse(localStorage.getItem("user")).admin
+    : false;
+
+  let Admin = "";
+  if (isAdmin) {
+    Admin = (
+      <li className="nav-item">
+        <Link
+          to={"/adminPanel"}
+          className="nav-link active"
+          aria-current="page"
+        >
+          Panel de Administrador
+        </Link>
+      </li>
+    );
   }
 
   let AuthContext = "";
+  if (localStorage.getItem("auth_token")) {
+    AuthContext = (
+      <li className="nav-item dropdown">
+        <a
+          href="/"
+          className="nav-link active dropdown-toggle"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {JSON.parse(localStorage.getItem("user")).nombre}
+        </a>
 
-  if(localStorage.getItem('auth_token')){
-    AuthContext  =  ( <li className="nav-item dropdown">
-      <a
-        href="/"
-        className="nav-link active dropdown-toggle"
-        id="navbarDropdown"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        User
-      </a>
-
-      <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li>
-          <Link to={"/profile/"+id} className="dropdown-item">
-            Perfil
-          </Link>
-        </li>
-        <li>
-          <button type="button" onClick={logout} className="dropdown-item">
-            Cerrar Sesión
-          </button>
-        </li>
-      </ul>
-    </li>
-    )
-  }else{
-    AuthContext  =  (
+        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li>
+            <Link to={"/profile/" + id} className="dropdown-item">
+              Perfil
+            </Link>
+          </li>
+          <li>
+            <button type="button" onClick={logout} className="dropdown-item">
+              Cerrar Sesión
+            </button>
+          </li>
+        </ul>
+      </li>
+    );
+  } else {
+    AuthContext = (
       <ul className="navbar-nav">
         <li className="nav-item">
           <Link to={"/login"} className="nav-link">
@@ -69,7 +92,7 @@ function Header(props) {
           </Link>
         </li>
       </ul>
-    )
+    );
   }
 
   return (
@@ -98,14 +121,15 @@ function Header(props) {
               </Link>
             </li>
             {AuthContext}
+            {Admin}
           </ul>
-          <div className="d-flex filterIdClass">
-            {/**<ul>
-                            <li id="showFilter" onclick="showHideAddNotice('showFilter')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/filtrar.png" alt=""/></a></li>
-                            <li id="showId" onclick="showHideAddNotice('showId')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/add.png" alt=""/></a></li>
-                            <li id="showFechas" onclick="showHideAddNotice('showFechas')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/fechas.png" alt=""/></a></li>
-                        </ul>*/}
-          </div>
+          {/* <div className="d-flex filterIdClass">
+            <ul>
+              <li id="showFilter" onclick="showHideAddNotice('showFilter')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/filtrar.png" alt=""/></a></li>
+              <li id="showId" onclick="showHideAddNotice('showId')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/add.png" alt=""/></a></li>
+              <li id="showFechas" onclick="showHideAddNotice('showFechas')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/fechas.png" alt=""/></a></li>
+            </ul>
+          </div> */}
           <form action="" method="POST" className="d-flex">
             <input
               name="seName"
