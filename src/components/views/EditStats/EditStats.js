@@ -20,8 +20,32 @@ function EditStats(props) {
       setPerfil(response.data);
     });
   }, [id_user]);
-  console.log(juegos);
+  // console.log(juegos);
 
+  const agregarStat = (Stat) => {
+    // console.log(Stat)
+    let data = {
+      name: Stat.name,
+      value: Stat.value,
+      idUser: perfil.id,
+      idGame: Stat.idGame,
+    };
+    axios.post("api/statistic", data).then((res) => {
+      axios.get("api/user/" + id_user).then((response) => {
+        setPerfil(response.data);
+      });
+    });
+  };
+  
+  const modificarStat = (Stat) => {
+    axios
+      .put(`api/statistic/${Stat.idStat}?value=${Stat.value}&name=${Stat.name}`)
+      .then((res) => {
+        axios.get("api/user/" + id_user).then((response) => {
+          setPerfil(response.data);
+        });
+      });
+  };
   let juegosPropios = [];
   for (const index in perfil.games) {
     juegosPropios.push(perfil.games[index][0]);
@@ -36,7 +60,17 @@ function EditStats(props) {
       }
     }
   }
-console.log(perfil)
+
+  const eliminarStat = (idStat) => {
+    axios.delete(`api/statistic/${idStat}`).then((res) => {
+      axios.get("api/user/" + id_user).then((response) => {
+        setPerfil(response.data);
+      });
+      axios.get("api/game").then((response) => {
+        setJuegos(response.data);
+      });
+    });
+  };
   //AQUI NUEVA INTERFAZ PARA CREAR O EDITAR INTERFAZ
 
   return (
@@ -89,30 +123,22 @@ console.log(perfil)
             : "No quedan mas juegos"}
         </div>
         <div className="panelStats col-9 tab-content" id="v-pills-tabContent">
-        <div
-        className="tab-pane fade show active"
-        role="tabpanel"
-        >
-        Aqui seran los paneles de Stats (INPUTS)
-        </div>
-          
+          <div className="tab-pane fade show active" role="tabpanel">
+            Aqui seran los paneles de Stats (INPUTS)
+          </div>
+
           {juegosPropios.map((juego) => (
-            <StatsContent key={juego.id} id={juego.id}stats={perfil.statistics}/>
+            <StatsContent
+              key={juego.id}
+              id={juego.id}
+              onDelete={eliminarStat}
+              onUpdate={modificarStat}
+              onAdd={agregarStat}
+              stats={perfil.statistics}
+            />
           ))}
           {otrosJuegos.map((juego) => (
-            <div
-              key={juego.id}
-              className="tab-pane fade"
-              id={"v-pills-" + juego.id}
-              role="tabpanel"
-              aria-labelledby={"v-pills-" + juego.id + "-tab"}
-            >
-              {juego.name}
-              <br/>
-              <input type="text" defaultValue={"Horas"}/> {"=>"} <input type={"text"} defaultValue={"1000"}/><button>modificar</button>
-              <br/>
-              <input type="text"/> {"=>"} <input type={"text"}/><button>agregar</button>
-            </div>
+            <StatsContent key={juego.id} onAdd={agregarStat} id={juego.id} />
           ))}
         </div>
       </div>

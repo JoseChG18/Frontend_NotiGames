@@ -1,15 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 
-function StatInput(props) {
+function StatsInput(props) {
+  // console.log(props);
+
+  const [updateInput, setUpdate] = useState({
+    errores: "",
+    name: props.datos ? props.datos.name : "",
+    value: props.datos ? props.datos.value : "",
+    idGame: props.id,
+    idStat: props.datos ? props.datos.id : "",
+  });
+
+  const onChangeInputs = (e) => {
+    e.persist();
+    setUpdate({ ...updateInput, [e.target.name]: e.target.value });
+  };
+  const agregarStat = (e) => {
+    e.preventDefault();
+    props.onAdd(updateInput);
+    setUpdate({ ...updateInput, name: "", value: "" });
+  };
+
+  const modificarStat = (e) => {
+    e.preventDefault();
+    props.onUpdate(updateInput);
+  };
+  const eliminarStat = (e) => {
+    e.preventDefault();
+    props.onDelete(updateInput.idStat);
+  };
   return (
-    <div className="inputsStats">
-      <input type={"text"} defaultValue={props.datos.name} />
+    <form className="inputsStats">
+      <input
+        type={"text"}
+        name="name"
+        onChange={onChangeInputs}
+        value={updateInput.name}
+      />
       {"=>"}
-      <input type={"text"} defaultValue={props.datos.value} />{" "}
-      <button>Modificar</button>
-      <button>Eliminar</button>
-    </div>
+      <input
+        type={"text"}
+        name="value"
+        onChange={onChangeInputs}
+        value={updateInput.value}
+      />
+      {props.datos ? (
+        <span>
+          <button className="btn btn-outline-primary" onClick={modificarStat}>
+            Modificar
+          </button>
+          <button className="btn btn-outline-danger" onClick={eliminarStat}>
+            Eliminar
+          </button>
+        </span>
+      ) : (
+        <button className="btn btn-outline-success" onClick={agregarStat}>
+          Agregar
+        </button>
+      )}
+    </form>
   );
 }
 
-export default StatInput;
+export default StatsInput;
