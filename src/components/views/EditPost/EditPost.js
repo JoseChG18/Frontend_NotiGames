@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./EditPost.scss";
 import Header from "../Header";
 import Footer from "../Footer";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 function EditPost() {
   const id = useParams().id;
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     tittle: "",
     description: "",
@@ -14,11 +15,16 @@ function EditPost() {
   });
   const [post, setPost] = useState();
   const [juegos, setJuegos] = useState();
-  
+
   useEffect(() => {
     axios.get(`api/post/${id}`).then((res) => {
       setPost(res.data);
-      setInputs( {...inputs , tittle: res.data.tittle , description: res.data.description, idGame: res.data.game.id})
+      setInputs({
+        ...inputs,
+        tittle: res.data.tittle,
+        description: res.data.description,
+        idGame: res.data.game.id,
+      });
     });
   }, [id]);
 
@@ -43,12 +49,18 @@ function EditPost() {
   const editarPost = (e) => {
     e.preventDefault();
     axios
-      .put(
-        `api/post/${id}?tittle=${inputs.tittle}&description=${inputs.description}&idGame=${inputs.game.id}`
-      )
-      .then((res) => console.log(res));
+      .put("api/post/" + id, {
+        tittle: inputs.tittle,
+        description: inputs.description,
+        idGame: inputs.idGame,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          navigate("/post/" + id);
+        }
+      });
   };
-  console.log(inputs)
+  // console.log(inputs);
   // console.log(post)
   // console.log(juegos)
   return (
@@ -94,12 +106,11 @@ function EditPost() {
 
           {juegos
             ? juegos.map((juego) => (
-                <option value={juego.id}>{juego.name}</option>
+                <option key={juego.id} value={juego.id}>
+                  {juego.name}
+                </option>
               ))
             : ""}
-          {/* <option value= {idgame}>
-          {nombreGame}
-          </option> */}
         </select>
         {/* <div className="mb-3 col-md-12">
           <label htmlFor="fechaPost" className="form-label">

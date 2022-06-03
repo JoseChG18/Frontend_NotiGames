@@ -132,6 +132,9 @@ function Post() {
             {/* Inicio Contenido noticia */}
             <p id="contenidoNoticia">{post.description}</p>
             {/* Fin Contenido noticia */}
+            <div className="container-footer">
+              <div className="firma">{post.game.name}</div>
+            </div>
           </div>
           {/* Fin noticia */}
           {/* Añadir Comentario */}

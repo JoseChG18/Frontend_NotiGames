@@ -7,6 +7,7 @@ import Register from "./components/views/Register";
 import EditProfile from "./components/views/EditProfile";
 import EditPost from "./components/views/EditPost";
 import EditStats from "./components/views/EditStats";
+import AdminPanel from "./components/views/AdminPanel";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -35,6 +36,7 @@ function App() {
         <Route path="profile/:id" element={<Profile />} />
         <Route path="profile/:id/stats" element={<EditStats />} />
         <Route path="profile/:id/edit" element={<EditProfile />} />
+        <Route path="adminPanel" element={<AdminPanel/>} />
       </Routes>
     </BrowserRouter>
   );
