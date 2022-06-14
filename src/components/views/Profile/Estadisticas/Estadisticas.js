@@ -1,19 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import EstadisticaNav from "./EstadisticaNav";
 import EstadisticaContent from "./EstadisticaContent";
 
-function Estadisticas (props) {
-
+function Estadisticas(props) {
+  const id = useParams().id;
   let juegos = [];
   for (const juego in props.juegos) {
-    juegos.push(props.juegos[juego][0])
-  } 
+    juegos.push(props.juegos[juego][0]);
+  }
 
   let estadisticas = [];
   for (const stat in props.estadisticas) {
-    estadisticas.push(props.estadisticas[stat])
-  } 
+    estadisticas.push(props.estadisticas[stat]);
+  }
   return (
     <div className="col-md-12">
       <div className="card text-center">
@@ -37,11 +37,34 @@ function Estadisticas (props) {
           </div>
         </nav>
         <div className="tab-content" id="nav-tabContent">
-          <div className="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            <Link to={"stats"} className="btn btn-outline-primary">Crear/Actualizar Estadisticas</Link>
-          </div>
+          {localStorage.getItem("auth_token") &&
+          JSON.parse(localStorage.getItem("user")).id.toString() === id ? (
+            <div
+              className="tab-pane fade active show"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <Link to={"stats"} className="btn btn-outline-primary">
+                Crear/Actualizar Estadisticas
+              </Link>
+            </div>
+          ) : (
+            <div
+              className="tab-pane fade active show"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              Estadisticas del usuario
+            </div>
+          )}
           {juegos.map((juego) => (
-            <EstadisticaContent key={juego.id} datos={estadisticas} juego={juego.id}/>
+            <EstadisticaContent
+              key={juego.id}
+              datos={estadisticas}
+              juego={juego.id}
+            />
           ))}
         </div>
       </div>

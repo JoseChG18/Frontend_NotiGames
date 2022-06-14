@@ -7,6 +7,7 @@ function AdminPanel() {
   const [juegos, setJuegos] = useState();
   const [users, setUsers] = useState();
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     axios.get("api/game").then((res) => {
       setJuegos(res.data);
@@ -16,14 +17,72 @@ function AdminPanel() {
     });
     setLoading(false);
   }, []);
-  const agregarAdmin = () => {};
-  const modificarJuego = () => {};
-  const eliminarUser = (idUser) => {
-      console.log(idUser)
+
+  const [juegoNuevo, setJuegoNuevo] = useState("");
+  const onChangeInputAgregar = (e) => {
+    setJuegoNuevo(e.target.value);
   };
-  const eliminarJuego = () => {};
-  //   console.log(users);
-  //   console.log(juegos);
+
+  const añadirJuego = (e) => {
+    e.preventDefault();
+    axios
+      .post("api/game", {
+        name: juegoNuevo,
+      })
+      .then((res) => {
+        setJuegoNuevo("");
+        axios.get("api/game").then((res) => {
+          setJuegos(res.data);
+        });
+      });
+  };
+
+  const onChangeInput = (e) => {
+    juegos.map((juego) => {
+      if (juego.id.toString() === e.target.id) {
+        juego.name = e.target.value;
+      }
+    });
+  };
+  const modificarJuego = (e) => {
+    juegos.map((juego) => {
+      if (juego.id.toString() === e.target.id) {
+        axios.put("api/game/" + e.target.id + "?name=" + juego.name).then(
+          axios.get("api/game").then((res) => {
+            setJuegos(res.data);
+          })
+        );
+      }
+    });
+  };
+
+  const eliminarJuego = (e) => {
+    axios.delete("api/game/" + e.target.id).then((res) =>
+      axios.get("api/game").then((res) => {
+        setJuegos(res.data);
+      })
+    );
+  };
+
+  const eliminarUser = (e) => {
+    axios.delete("api/user/" + e.target.id).then((res) =>
+      axios.get("api/user").then((res) => {
+        setUsers(res.data);
+      })
+    );
+  };
+
+  const onChangeAdmin = (e) => {
+    e.persist();
+    axios
+      .put("api/admin/" + e.target.id + "?admin=" + e.target.value)
+      .then((res) =>
+        axios.get("api/user").then((res) => {
+          setUsers(res.data);
+        })
+      );
+  };
+
   if (loading) {
     return (
       <div className="adminPanel">
@@ -79,21 +138,25 @@ function AdminPanel() {
               {users
                 ? users.map((user) =>
                     user.admin === 1 ? (
-                      <div>
+                      <div key={user.id}>
                         {user.username}{" "}
-                        <input type={"text"} value={user.admin} />
+                        <select
+                          // className="form-select"
+                          id={user.id}
+                          onChange={onChangeAdmin}
+                          name="admin"
+                          value={user.admin}
+                        >
+                          <option value={1}>Admin</option>
+                          <option value={0}>No Admin</option>
+                        </select>
                         <button
                           type="button"
+                          id={user.id}
                           className="btn btn-outline-danger"
-                          onClick={eliminarUser(user.id)}
+                          onClick={eliminarUser}
                         >
                           Eliminar
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-outline-success"
-                        >
-                          Modificar
                         </button>
                       </div>
                     ) : (
@@ -105,21 +168,26 @@ function AdminPanel() {
               {users
                 ? users.map((user) =>
                     user.admin === 0 ? (
-                      <div>
+                      <div key={user.id}>
                         {user.username}{" "}
-                        <input type={"text"} value={user.admin} />
+                        {/* <input type={"text"} value={user.admin} /> */}
+                        <select
+                          // className="form-select"
+                          id={user.id}
+                          onChange={onChangeAdmin}
+                          name="admin"
+                          value={user.admin}
+                        >
+                          <option value={1}>Admin</option>
+                          <option value={0}>No Admin</option>
+                        </select>
                         <button
                           type="button"
+                          id={user.id}
                           className="btn btn-outline-danger"
-                          onClick={eliminarUser(user.id)}
+                          onClick={eliminarUser}
                         >
                           Eliminar
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-outline-success"
-                        >
-                          Modificar
                         </button>
                       </div>
                     ) : (
@@ -137,22 +205,43 @@ function AdminPanel() {
             >
               {juegos
                 ? juegos.map((juego) => (
-                    <div>
-                      <input type={"text"} value={juego.name} />
-                      <button type="button" className="btn btn-outline-success">
+                    <div key={juego.id}>
+                      <input
+                        id={juego.id}
+                        onChange={onChangeInput}
+                        type={"text"}
+                        defaultValue={juego.name}
+                      />
+                      <button
+                        id={juego.id}
+                        type="button"
+                        className="btn btn-outline-success"
+                        onClick={modificarJuego}
+                      >
                         Modificar
                       </button>
-                      <button type="button" className="btn btn-outline-danger">
+                      <button
+                        id={juego.id}
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={eliminarJuego}
+                      >
                         Eliminar
                       </button>
                     </div>
                   ))
                 : ""}
               <div>
-                <input type={"text"} />
-                <button type="button" className="btn btn-outline-success">
-                  Añadir
-                </button>
+                <form onSubmit={añadirJuego}>
+                  <input
+                    onChange={onChangeInputAgregar}
+                    type={"text"}
+                    value={juegoNuevo}
+                  />
+                  <button type="submit" className="btn btn-outline-success">
+                    Añadir
+                  </button>
+                </form>
               </div>
             </div>
           </div>

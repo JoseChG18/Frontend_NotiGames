@@ -6,21 +6,22 @@ import Footer from "../Footer";
 
 import FotoPerfil from "./FotoPerfil";
 import Estadisticas from "./Estadisticas";
-import { Link ,useParams} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 function Profile() {
   const [profile, setProfile] = useState([]);
   const id = useParams("id").id;
 
-   useEffect(() => {
-    axios.get("api/user/"+ id)
-    .then((result) => setProfile(result.data))
+  useEffect(() => {
+    axios.get("api/user/" + id).then((result) => setProfile(result.data));
   }, [id]);
 
-  const idUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
+  const idUser = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).id
+    : "";
 
-  let propietario = ""
+  let propietario = "";
   if (idUser.toString() === id) {
     propietario = (
       <div className="btn-edit-profile">
@@ -32,7 +33,7 @@ function Profile() {
           </div>
         </div>
       </div>
-    )
+    );
   }
   return (
     <div>
@@ -107,7 +108,10 @@ function Profile() {
                   </div>
                 </div>
               </div>
-              <Estadisticas estadisticas={profile.statistics} juegos={profile.games}/> 
+              <Estadisticas
+                estadisticas={profile.statistics}
+                juegos={profile.games}
+              />
             </div>
           </div>
         </div>

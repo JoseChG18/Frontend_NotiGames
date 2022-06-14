@@ -9,9 +9,9 @@ import "./Header.scss";
 import logo from "../../../images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 
 function Header(props) {
-
   const navigate = useNavigate();
 
   const id = JSON.parse(localStorage.getItem("user"))
@@ -82,18 +82,39 @@ function Header(props) {
     AuthContext = (
       <ul className="navbar-nav">
         <li className="nav-item">
-          <Link to={"/login"} className="nav-link">
+          <Link to={"/login"} className="nav-link active">
             Login
           </Link>
         </li>
         <li className="nav-item">
-          <Link to={"/register"} className="nav-link">
+          <Link to={"/register"} className="nav-link active">
             Register
           </Link>
         </li>
       </ul>
     );
   }
+
+  const [titulo, setTitulo] = useState("");
+
+  const onChangeInput = (e) => {
+    e.persist();
+    setTitulo(e.target.value);
+  };
+
+  const buscarNombre = (e) => {
+    e.preventDefault();
+    axios
+      .post("api/post/search", {
+        palabra: titulo,
+      })
+      .then((res) =>
+        // res.data.length > 0
+        //   ? navigate("/busqueda", res.data)
+        //   : alert("no se encontro nada")
+        console.log(res.data)
+      );
+  };
 
   return (
     <nav className="navbar navbar-light navbar-expand-lg">
@@ -130,19 +151,19 @@ function Header(props) {
               <li id="showFechas" onclick="showHideAddNotice('showFechas')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/fechas.png" alt=""/></a></li>
             </ul>
           </div> */}
-          <form action="" method="POST" className="d-flex">
+          <form onSubmit={buscarNombre} className="d-flex">
             <input
-              name="seName"
+              name="titulo"
               className="form-control me-2"
-              type="search"
+              type="text"
               placeholder="Search"
-              aria-label="Search"
+              value={titulo}
+              onChange={onChangeInput}
             />
             <button
               name="search"
               className="btn btn-outline-dark"
               type="submit"
-              value="search"
             >
               Search
             </button>
