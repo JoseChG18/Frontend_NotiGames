@@ -5,6 +5,7 @@ import Footer from "../Footer";
 import Comentario from "./Comentario";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "../scss/preloader.scss";
 
 function Post() {
   const navigate = useNavigate();
@@ -85,7 +86,11 @@ function Post() {
     return (
       <div>
         <Header />
-        <h1 className="text-center">Cargando...</h1>
+        {/* <h1 className="text-center">Cargando...</h1> */}
+        <div className="contPreload">
+          <div class="preloader"></div>
+          <div class="textCargando">Cargando...</div>
+        </div>
         <Footer />
       </div>
     );

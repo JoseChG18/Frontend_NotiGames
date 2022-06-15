@@ -109,9 +109,6 @@ function Header(props) {
         palabra: titulo,
       })
       .then((res) =>
-        // res.data.length > 0
-        //   ? navigate("/busqueda", res.data)
-        //   : alert("no se encontro nada")
         console.log(res.data)
       );
   };

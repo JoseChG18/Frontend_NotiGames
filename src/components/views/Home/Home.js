@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import "./Home.css";
+import "../scss/preloader.scss";
 import PostIndividual from "./PostIndividual";
 
 function Home() {
@@ -22,7 +23,11 @@ function Home() {
     return (
       <div>
         <Header />
-        <h1 className="text-center">Cargando...</h1>
+        {/* <h1 className="text-center">Cargando...</h1> */}
+        <div className="contPreload">
+          <div class="preloader"></div>
+          <div class="textCargando">Cargando...</div>
+        </div>
         <Footer />
       </div>
     );
