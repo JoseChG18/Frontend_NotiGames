@@ -3,7 +3,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import axios from "axios";
 import "../scss/preloader.scss";
-
+import "./adminPanel.scss";
 function AdminPanel() {
   const [juegos, setJuegos] = useState();
   const [users, setUsers] = useState();
@@ -88,7 +88,10 @@ function AdminPanel() {
     return (
       <div className="adminPanel">
         <Header />
-        <div class="preloader"></div>
+        <div className="contPreload">
+          <div class="preloader"></div>
+          <div class="textCargando">Cargando...</div>
+        </div>
         <Footer />
       </div>
     );
@@ -96,153 +99,160 @@ function AdminPanel() {
     return (
       <div className="adminPanel">
         <Header />
-        <div className="Estadisticas d-flex mx-auto my-auto align-items-start">
-          <div
-            className="col-3 nav flex-column nav-pills"
-            id="v-pills-tab"
-            role="tablist"
-            aria-orientation="vertical"
-          >
-            <button
-              className="nav-link active"
-              id="v-pills-users-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#v-pills-users"
-              type="button"
-              role="tab"
-              aria-controls="v-pills-users"
-              aria-selected="false"
-            >
-              Usuarios
-            </button>
-            <button
-              className="nav-link"
-              id={"v-pills-juegos-tab"}
-              data-bs-toggle="pill"
-              data-bs-target="#v-pills-juegos"
-              type="button"
-              role="tab"
-              aria-controls="v-pills-juegos"
-              aria-selected="false"
-            >
-              Juegos
-            </button>
-          </div>
-          <div className="col-9 tab-content" id="v-pills-tabContent">
+        <div className="contUsersAdm d-flex">
+          <div className="Estadisticas d-flex mx-auto my-auto align-items-start">
             <div
-              className="tab-pane fade show active"
-              id="v-pills-users"
-              role="tabpanel"
-              aria-labelledby="v-pills-users-tab"
+              className="col-3 nav flex-column nav-pills"
+              id="v-pills-tab"
+              role="tablist"
+              aria-orientation="vertical"
             >
-              USUARIOS ADMINISTRADORES
-              {users
-                ? users.map((user) =>
-                  user.admin === 1 ? (
-                    <div key={user.id}>
-                      {user.username}{" "}
-                      <select
-                        // className="form-select"
-                        id={user.id}
-                        onChange={onChangeAdmin}
-                        name="admin"
-                        value={user.admin}
-                      >
-                        <option value={1}>Admin</option>
-                        <option value={0}>No Admin</option>
-                      </select>
-                      <button
-                        type="button"
-                        id={user.id}
-                        className="btn btn-outline-danger"
-                        onClick={eliminarUser}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  ) : (
-                    ""
-                  )
-                )
-                : ""}
-              USUARIOS NO ADMINS
-              {users
-                ? users.map((user) =>
-                  user.admin === 0 ? (
-                    <div key={user.id}>
-                      {user.username}{" "}
-                      {/* <input type={"text"} value={user.admin} /> */}
-                      <select
-                        // className="form-select"
-                        id={user.id}
-                        onChange={onChangeAdmin}
-                        name="admin"
-                        value={user.admin}
-                      >
-                        <option value={1}>Admin</option>
-                        <option value={0}>No Admin</option>
-                      </select>
-                      <button
-                        type="button"
-                        id={user.id}
-                        className="btn btn-outline-danger"
-                        onClick={eliminarUser}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  ) : (
-                    ""
-                  )
-                )
-                : ""}
+              <button
+                className="btn-admins nav-link active"
+                id="v-pills-users-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-users"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-users"
+                aria-selected="false"
+              >
+                Usuarios
+              </button>
+              <button
+                className="btn-admins nav-link"
+                id={"v-pills-juegos-tab"}
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-juegos"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-juegos"
+                aria-selected="false"
+              >
+                Juegos
+              </button>
             </div>
+            <div className="col-9 tab-content" id="v-pills-tabContent">
+              <div
+                className="tab-pane fade show active"
+                id="v-pills-users"
+                role="tabpanel"
+                aria-labelledby="v-pills-users-tab"
+              >
+                <div className="admins">
+                  <div className="useradmin"> USUARIOS ADMINISTRADORES</div>
+                  {users
+                    ? users.map((user) =>
+                      user.admin === 1 ? (
+                        <div key={user.id} >
+                          {user.username}{" "}
+                          <select
+                            // className="form-select"
+                            id={user.id}
+                            onChange={onChangeAdmin}
+                            name="admin"
+                            value={user.admin}
+                          >
+                            <option value={1}>Admin</option>
+                            <option value={0}>No Admin</option>
+                          </select>
+                          <button
+                            type="button"
+                            id={user.id}
+                            className="btn btn-outline-danger"
+                            onClick={eliminarUser}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      ) : (
+                        ""
+                      )
+                    )
+                    : ""}
+                </div>
+                <div className="noAdmins">
+                  <div className="useradmin">USUARIOS NO ADMINS</div>
+                  {users
+                    ? users.map((user) =>
+                      user.admin === 0 ? (
+                        <div key={user.id}>
+                          {user.username}{" "}
+                          {/* <input type={"text"} value={user.admin} /> */}
+                          <select
+                            // className="form-select"
+                            id={user.id}
+                            onChange={onChangeAdmin}
+                            name="admin"
+                            value={user.admin}
+                          >
+                            <option value={1}>Admin</option>
+                            <option value={0}>No Admin</option>
+                          </select>
+                          <button
+                            type="button"
+                            id={user.id}
+                            className="btn btn-outline-danger"
+                            onClick={eliminarUser}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      ) : (
+                        ""
+                      )
+                    )
+                    : ""}
+                </div>
+              </div>
 
-            <div
-              className="tab-pane fade"
-              id="v-pills-juegos"
-              role="tabpanel"
-              aria-labelledby="v-pills-juegos-tab"
-            >
-              {juegos
-                ? juegos.map((juego) => (
-                  <div key={juego.id}>
+              <div
+                className="juegosEdit tab-pane fade"
+                id="v-pills-juegos"
+                role="tabpanel"
+                aria-labelledby="v-pills-juegos-tab"
+              >
+                <div className="useradmin">JUEGOS</div>
+                {juegos
+                  ? juegos.map((juego) => (
+                    <div key={juego.id} className="p">
+                      <input
+                        id={juego.id}
+                        onChange={onChangeInput}
+                        type={"text"}
+                        defaultValue={juego.name}
+                      />
+                      <button
+                        id={juego.id}
+                        type="button"
+                        className="btn btn-outline-success"
+                        onClick={modificarJuego}
+                      >
+                        Modificar
+                      </button>
+                      <button
+                        id={juego.id}
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={eliminarJuego}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  ))
+                  : ""}
+                <div className="addJuego">
+                  <form onSubmit={añadirJuego}>
                     <input
-                      id={juego.id}
-                      onChange={onChangeInput}
+                      onChange={onChangeInputAgregar}
                       type={"text"}
-                      defaultValue={juego.name}
+                      value={juegoNuevo}
                     />
-                    <button
-                      id={juego.id}
-                      type="button"
-                      className="btn btn-outline-success"
-                      onClick={modificarJuego}
-                    >
-                      Modificar
+                    <button type="submit" className="btn btn-outline-success">
+                      Añadir
                     </button>
-                    <button
-                      id={juego.id}
-                      type="button"
-                      className="btn btn-outline-danger"
-                      onClick={eliminarJuego}
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                ))
-                : ""}
-              <div>
-                <form onSubmit={añadirJuego}>
-                  <input
-                    onChange={onChangeInputAgregar}
-                    type={"text"}
-                    value={juegoNuevo}
-                  />
-                  <button type="submit" className="btn btn-outline-success">
-                    Añadir
-                  </button>
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
