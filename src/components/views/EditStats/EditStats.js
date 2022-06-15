@@ -4,7 +4,8 @@ import Header from "../Header";
 import Footer from "../Footer";
 import StatsContent from "./StatsContent";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import volver from "../../../images/volver.gif";
 
 function EditStats(props) {
   const id_user = useParams().id;
@@ -76,6 +77,7 @@ function EditStats(props) {
   return (
     <div className="contEditStats">
       <Header />
+      <div className="volver"><Link to={"/profile/" + id_user}>Volver<img src={volver} width={"30px"} height={"30px"} /></Link></div>
       <div className="Estadisticas d-flex mx-auto my-auto align-items-start mb-5 stats-diff">
         <div
           className="lateralIzq col-3 nav flex-column nav-pills"
