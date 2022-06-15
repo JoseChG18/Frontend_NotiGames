@@ -36,7 +36,7 @@ function EditStats(props) {
       });
     });
   };
-  
+
   const modificarStat = (Stat) => {
     axios
       .put(`api/statistic/${Stat.idStat}?value=${Stat.value}&name=${Stat.name}`)
@@ -76,55 +76,55 @@ function EditStats(props) {
   return (
     <div className="contEditStats">
       <Header />
-      <div className="Estadisticas d-flex mx-auto my-auto align-items-start">
+      <div className="Estadisticas d-flex mx-auto my-auto align-items-start mb-5 stats-diff">
         <div
           className="lateralIzq col-3 nav flex-column nav-pills"
           id="v-pills-tab"
           role="tablist"
           aria-orientation="vertical"
         >
-          <li>Mis Juegos</li>
+          <li className="misJuegos">Mis Juegos</li>
           {juegosPropios.length > 0
             ? juegosPropios.map((mios) => (
-                <button
-                  className="nav-link"
-                  id={"v-pills-" + mios.id + "-tab"}
-                  data-bs-toggle="pill"
-                  data-bs-target={"#v-pills-" + mios.id}
-                  type="button"
-                  role="tab"
-                  aria-controls={"v-pills-" + mios.id}
-                  aria-selected="false"
-                  key={mios.id}
-                >
-                  {mios.name}
-                </button>
-              ))
-            : "No tienes ningun juego"}
+              <button
+                className="nav-link"
+                id={"v-pills-" + mios.id + "-tab"}
+                data-bs-toggle="pill"
+                data-bs-target={"#v-pills-" + mios.id}
+                type="button"
+                role="tab"
+                aria-controls={"v-pills-" + mios.id}
+                aria-selected="false"
+                key={mios.id}
+              >
+                {mios.name}
+              </button>
+            ))
+            : <span className="nodispongoJuegos">{"No tienes ningun juego"}</span>}
 
-          <li>Otro juegos</li>
+          <li className="misJuegos">Otros juegos</li>
 
           {otrosJuegos.length > 0
             ? otrosJuegos.map((otros) => (
-                <button
-                  key={otros.id}
-                  className="nav-link"
-                  id={"v-pills-" + otros.id + "-tab"}
-                  data-bs-toggle="pill"
-                  data-bs-target={"#v-pills-" + otros.id}
-                  type="button"
-                  role="tab"
-                  aria-controls={"v-pills-" + otros.id}
-                  aria-selected="false"
-                >
-                  {otros.name}
-                </button>
-              ))
+              <button
+                key={otros.id}
+                className="nav-link"
+                id={"v-pills-" + otros.id + "-tab"}
+                data-bs-toggle="pill"
+                data-bs-target={"#v-pills-" + otros.id}
+                type="button"
+                role="tab"
+                aria-controls={"v-pills-" + otros.id}
+                aria-selected="false"
+              >
+                {otros.name}
+              </button>
+            ))
             : "No quedan mas juegos"}
         </div>
-        <div className="panelStats col-9 tab-content" id="v-pills-tabContent">
-          <div className="tab-pane fade show active" role="tabpanel">
-            Aqui seran los paneles de Stats (INPUTS)
+        <div className="panelStats col-9 tab-content panelestadisticas" id="v-pills-tabContent">
+          <div className="nostats tab-pane fade show active" role="tabpanel">
+            Usted no dispone todavía de estadisticas de juegos! .-.
           </div>
 
           {juegosPropios.map((juego) => (

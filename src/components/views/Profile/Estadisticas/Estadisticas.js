@@ -38,25 +38,25 @@ function Estadisticas(props) {
         </nav>
         <div className="tab-content" id="nav-tabContent">
           {localStorage.getItem("auth_token") &&
-          JSON.parse(localStorage.getItem("user")).id.toString() === id ? (
+            JSON.parse(localStorage.getItem("user")).id.toString() === id ? (
             <div
-              className="tab-pane fade active show"
+              className="navHomeUser tab-pane fade active show"
               id="nav-home"
               role="tabpanel"
               aria-labelledby="nav-home-tab"
             >
-              <Link to={"stats"} className="btn btn-outline-primary">
+              <Link to={"stats"} className="btn-edit btn btn-outline-primary">
                 Crear/Actualizar Estadisticas
               </Link>
             </div>
           ) : (
             <div
-              className="tab-pane fade active show"
+              className="navHomeUser tab-pane fade active show"
               id="nav-home"
               role="tabpanel"
               aria-labelledby="nav-home-tab"
             >
-              Estadisticas del usuario
+              <span className="msgStastsUser">Estadisticas del usuario</span>
             </div>
           )}
           {juegos.map((juego) => (

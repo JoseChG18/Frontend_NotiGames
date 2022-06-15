@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../EditStats.scss";
 
 function StatsInput(props) {
   // console.log(props);
@@ -37,7 +38,7 @@ function StatsInput(props) {
         onChange={onChangeInputs}
         value={updateInput.name}
       />
-      {"=>"}
+      <span className="flechaJuegos">{"🡇"}</span>
       <input
         type={"text"}
         name="value"
@@ -46,15 +47,15 @@ function StatsInput(props) {
       />
       {props.datos ? (
         <span>
-          <button className="btn btn-outline-primary" onClick={modificarStat}>
+          <button className="btn-edit-juegos btn btn-outline-primary" onClick={modificarStat}>
             Modificar
           </button>
-          <button className="btn btn-outline-danger" onClick={eliminarStat}>
+          <button className="btn-edit-juegos-elim-add btn btn-outline-danger" onClick={eliminarStat}>
             Eliminar
           </button>
         </span>
       ) : (
-        <button className="btn btn-outline-success" onClick={agregarStat}>
+        <button className="btn-edit-juegos-elim-add btn btn-outline-success" onClick={agregarStat}>
           Agregar
         </button>
       )}

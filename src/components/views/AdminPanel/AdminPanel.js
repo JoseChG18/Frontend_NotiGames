@@ -226,7 +226,7 @@ function AdminPanel() {
                       <button
                         id={juego.id}
                         type="button"
-                        className="btn btn-outline-success"
+                        className=" btn btn-outline-primary"
                         onClick={modificarJuego}
                       >
                         Modificar
