@@ -4,6 +4,7 @@ import Footer from "../Footer";
 import axios from "axios";
 import "../scss/preloader.scss";
 import "./adminPanel.scss";
+
 function AdminPanel() {
   const [juegos, setJuegos] = useState();
   const [users, setUsers] = useState();
