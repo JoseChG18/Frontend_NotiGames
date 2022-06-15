@@ -144,115 +144,117 @@ function AdminPanel() {
                   <div className="useradmin"> USUARIOS ADMINISTRADORES</div>
                   {users
                     ? users.map((user) =>
-                      user.admin === 1 ? (
-                        <div key={user.id} >
-                          {user.username}{" "}
-                          <select
-                            // className="form-select"
-                            id={user.id}
-                            onChange={onChangeAdmin}
-                            name="admin"
-                            value={user.admin}
-                          >
-                            <option value={1}>Admin</option>
-                            <option value={0}>No Admin</option>
-                          </select>
-                          <button
-                            type="button"
-                            id={user.id}
-                            className="btn btn-outline-danger"
-                            onClick={eliminarUser}
-                          >
-                            Eliminar
-                          </button>
-                        </div>
-                      ) : (
-                        ""
+                        user.admin === 1 ? (
+                          <div key={user.id}>
+                            {user.username}{" "}
+                            <select
+                              // className="form-select"
+                              id={user.id}
+                              onChange={onChangeAdmin}
+                              name="admin"
+                              value={user.admin}
+                            >
+                              <option value={1}>Admin</option>
+                              <option value={0}>No Admin</option>
+                            </select>
+                            <button
+                              type="button"
+                              id={user.id}
+                              className="btn btn-outline-danger"
+                              onClick={eliminarUser}
+                            >
+                              Eliminar
+                            </button>
+                          </div>
+                        ) : (
+                          ""
+                        )
                       )
-                    )
                     : ""}
                 </div>
                 <div className="noAdmins">
                   <div className="useradmin">USUARIOS NO ADMINS</div>
                   {users
                     ? users.map((user) =>
-                      user.admin === 0 ? (
-                        <div key={user.id}>
-                          {user.username}{" "}
-                          {/* <input type={"text"} value={user.admin} /> */}
-                          <select
-                            // className="form-select"
-                            id={user.id}
-                            onChange={onChangeAdmin}
-                            name="admin"
-                            value={user.admin}
-                          >
-                            <option value={1}>Admin</option>
-                            <option value={0}>No Admin</option>
-                          </select>
-                          <button
-                            type="button"
-                            id={user.id}
-                            className="btn btn-outline-danger"
-                            onClick={eliminarUser}
-                          >
-                            Eliminar
-                          </button>
-                        </div>
-                      ) : (
-                        ""
+                        user.admin === 0 ? (
+                          <div key={user.id}>
+                            {user.username}{" "}
+                            {/* <input type={"text"} value={user.admin} /> */}
+                            <select
+                              // className="form-select"
+                              id={user.id}
+                              onChange={onChangeAdmin}
+                              name="admin"
+                              value={user.admin}
+                            >
+                              <option value={1}>Admin</option>
+                              <option value={0}>No Admin</option>
+                            </select>
+                            <button
+                              type="button"
+                              id={user.id}
+                              className="btn btn-outline-danger"
+                              onClick={eliminarUser}
+                            >
+                              Eliminar
+                            </button>
+                          </div>
+                        ) : (
+                          ""
+                        )
                       )
-                    )
                     : ""}
                 </div>
               </div>
 
               <div
-                className="juegosEdit tab-pane fade"
+                className="tab-pane fade"
                 id="v-pills-juegos"
                 role="tabpanel"
                 aria-labelledby="v-pills-juegos-tab"
               >
-                <div className="useradmin">JUEGOS</div>
-                {juegos
-                  ? juegos.map((juego) => (
-                    <div key={juego.id} className="p">
+                <div className="juegosAdmin">
+                  <div className="useradmin">JUEGOS</div>
+                  {juegos
+                    ? juegos.map((juego) => (
+                        <div key={juego.id} className="p">
+                          <input
+                            id={juego.id}
+                            onChange={onChangeInput}
+                            type={"text"}
+                            defaultValue={juego.name}
+                          />
+                          <button
+                            id={juego.id}
+                            type="button"
+                            className="btn btn-outline-success"
+                            onClick={modificarJuego}
+                          >
+                            Modificar
+                          </button>
+                          <button
+                            id={juego.id}
+                            type="button"
+                            className="btn btn-outline-danger"
+                            onClick={eliminarJuego}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      ))
+                    : ""}
+                  <div className="addJuego">
+                    <form onSubmit={añadirJuego}>
                       <input
-                        id={juego.id}
-                        onChange={onChangeInput}
+                        onChange={onChangeInputAgregar}
                         type={"text"}
-                        defaultValue={juego.name}
+                        value={juegoNuevo}
                       />
-                      <button
-                        id={juego.id}
-                        type="button"
-                        className="btn btn-outline-success"
-                        onClick={modificarJuego}
-                      >
-                        Modificar
+                      <button type="submit" className="btn btn-outline-success">
+                        Añadir
                       </button>
-                      <button
-                        id={juego.id}
-                        type="button"
-                        className="btn btn-outline-danger"
-                        onClick={eliminarJuego}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  ))
-                  : ""}
-                <div className="addJuego">
-                  <form onSubmit={añadirJuego}>
-                    <input
-                      onChange={onChangeInputAgregar}
-                      type={"text"}
-                      value={juegoNuevo}
-                    />
-                    <button type="submit" className="btn btn-outline-success">
-                      Añadir
-                    </button>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
