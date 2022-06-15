@@ -9,11 +9,10 @@ function Comentario(props) {
   const id_user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
   const isAdmin = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).admin : false;
   let PropietarioAdmin = ""
-  if(props.datos.user_id === id_user || isAdmin)
-  {
+  if (props.datos.user_id === id_user || isAdmin) {
     PropietarioAdmin = (<button
       onClick={deleteComentario}
-      className="btn btn-danger my-2 float-end"
+      className="charactersCome btn btn-danger my-2 float-end"
       id="btnComentar"
       type="button"
     >
@@ -33,7 +32,7 @@ function Comentario(props) {
         <div className="card-body">
           <h5 className="card-title">{props.datos.comment}</h5>
           <p className="card-text"></p>
-          <span id="btnComentar" className="btn btn-primary">
+          <span id="btnComentar" className="btnNo btn btn-primary">
             {props.datos.created_at}
           </span>
         </div>

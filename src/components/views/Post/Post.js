@@ -100,13 +100,13 @@ function Post() {
         <div>
           <button
             onClick={deletePost}
-            className="btn btn-danger my-2"
+            className="charactersCome btn btn-danger my-2"
             id="btnComentar"
             type="submit"
           >
             X
           </button>
-          <Link to={"edit"} className="btn btn-danger my-2">
+          <Link to={"edit"} className="btn btn-outline-primary my-2">
             Modificar
           </Link>
         </div>
@@ -162,7 +162,7 @@ function Post() {
                   <button
                     type="submit"
                     id="btnComentar"
-                    className="btn btn-primary"
+                    className="charactersCome btn btn-primary"
                   >
                     Comentar
                   </button>

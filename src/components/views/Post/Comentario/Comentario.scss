@@ -1,8 +1,9 @@
 @import "../../scss/variables.scss";
 .container-comentarios {
     padding: 1rem;
-    width: 100%;
     height: auto;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .noticia {
@@ -23,12 +24,13 @@
 //     border: 1px solid black;
 // }
 
-// .formContent {
-//     display: flex;
-//     align-items: center;
-//     justify-content: end;
-//     margin: 2px;
-// }
+.formContent {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 2px;
+    gap: 1rem;
+}
 
 #tNoticia {
     text-align: center;
