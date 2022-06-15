@@ -26,8 +26,8 @@ function Profile() {
     propietario = (
       <div className="btn-edit-profile">
         <div className="row">
-          <div className="col-sm-3 ">
-            <Link to={"edit"} className="btn btn-outline-primary">
+          <div className="btn-perfil-enviar">
+            <Link to={"edit"} className="btn-edit btn btn-outline-primary">
               Editar
             </Link>
           </div>
@@ -41,7 +41,7 @@ function Profile() {
       {/* Inicio Contenedor Perfil */}
       <div className="container-perfil contenedorPadre">
         {/* https://www.bootdey.com/snippets/view/profile-with-data-and-skills */}
-        <div className="container-div">
+        <div className="container-div profile-padre">
           <div className="container">
             <div className="row gutters-sm">
               <div className="col-md-4 mb-3">

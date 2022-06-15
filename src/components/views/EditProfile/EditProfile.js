@@ -15,13 +15,13 @@ function EditProfile(props) {
   })
 
   useEffect(() => {
-    axios.get("api/user/"+ id)
-    .then((result) => setUpdate(result.data))
+    axios.get("api/user/" + id)
+      .then((result) => setUpdate(result.data))
   }, [id]);
 
   const onChangeInputs = (e) => {
     e.persist();
-    setUpdate({...updateInput, [e.target.name]: e.target.value})
+    setUpdate({ ...updateInput, [e.target.name]: e.target.value })
   }
 
   const actualizaPerfil = (e) => {
@@ -32,7 +32,7 @@ function EditProfile(props) {
         nombre: updateInput.nombre,
         apellidos: updateInput.apellidos,
         telefono: updateInput.telefono,
-        provincia : updateInput.provincia,
+        provincia: updateInput.provincia,
         ciudad: updateInput.ciudad,
         email: updateInput.email,
         username: updateInput.username,
@@ -43,7 +43,7 @@ function EditProfile(props) {
           alert("Usuario Actualizado correctamente");
           navigate("/profile/" + id);
         } else {
-          setUpdate({...updateInput , errores: response.data.errores})
+          setUpdate({ ...updateInput, errores: response.data.errores })
         }
       });
   }
@@ -55,7 +55,7 @@ function EditProfile(props) {
 
       {/* Inicio Contenedor Editar-Perfil */}
       <form onSubmit={actualizaPerfil}>
-        <div className="simu-body d-flex justify-content-center aling-self-center">
+        <div className="simu-body d-flex justify-content-center aling-self-center mt-5">
           <div className="container rounded bg-white mt-0 mb-0">
             <div className="row">
               <div className="col-md-4 border-end">
@@ -70,8 +70,8 @@ function EditProfile(props) {
               </div>
               <div className="col-md-8 border-end">
                 <div className="p-3 py-5">
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h4 className="text-right">Edita tu Perfil</h4>
+                  <div className="d-flex justify-content-center align-items-center mb-3">
+                    <h4 className="tilEditProfile text-right">Edita tu Perfil</h4>
                   </div>
                   <div className="row mt-3">
                     <div className="col-md-12">
@@ -84,7 +84,7 @@ function EditProfile(props) {
                         defaultValue={updateInput.username}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["username"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["username"] : ""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Contraseña</label>
@@ -96,7 +96,7 @@ function EditProfile(props) {
                         defaultValue={updateInput.password}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["password"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["password"] : ""}</span>
                     </div>
                   </div>
                   <div className="row mt-2">
@@ -110,7 +110,7 @@ function EditProfile(props) {
                         defaultValue={updateInput.nombre}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["nombre"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["nombre"] : ""}</span>
                     </div>
                     <div className="col-md-6">
                       <label className="labels">Apellidos</label>
@@ -122,7 +122,7 @@ function EditProfile(props) {
                         defaultValue={updateInput.apellidos}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["apellidos"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["apellidos"] : ""}</span>
                     </div>
                   </div>
                   <div className="row mt-2">
@@ -136,7 +136,7 @@ function EditProfile(props) {
                         defaultValue={updateInput.email}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["email"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["email"] : ""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Telefono movil</label>
@@ -148,7 +148,7 @@ function EditProfile(props) {
                         defaultValue={updateInput.telefono}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["telefono"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["telefono"] : ""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Provincia</label>
@@ -160,7 +160,7 @@ function EditProfile(props) {
                         defaultValue={updateInput.provincia}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["provincia"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["provincia"] : ""}</span>
                     </div>
                     <div className="col-md-12">
                       <label className="labels">Ciudad</label>
@@ -172,16 +172,16 @@ function EditProfile(props) {
                         defaultValue={updateInput.ciudad}
                         onChange={onChangeInputs}
                       />
-                      <span className="text-danger">{(updateInput.errores)?updateInput.errores["ciudad"]:""}</span>
+                      <span className="text-danger">{(updateInput.errores) ? updateInput.errores["ciudad"] : ""}</span>
                     </div>
                   </div>
-                  <div className="mt-5 text-center">
-                    <button className="btn btn-primary profile-button" type="submit">
-                    Editar
+                  <div className="mt-5 text-center edit-profile-btn">
+                    <button className="btn-edit btn btn-primary profile-button" type="submit">
+                      Editar
                     </button>
                     <Link
                       to={"/profile/" + id}
-                      className="btn btn-primary profile-button"
+                      className="btn-edit btn btn-primary profile-button"
                     >
                       Cancelar
                     </Link>
