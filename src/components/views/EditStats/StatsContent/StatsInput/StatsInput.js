@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function StatsInput(props) {
-  // console.log(props);
 
   const [updateInput, setUpdate] = useState({
     errores: "",

@@ -25,8 +25,8 @@ function Home() {
         <Header />
         {/* <h1 className="text-center">Cargando...</h1> */}
         <div className="contPreload">
-          <div class="preloader"></div>
-          <div class="textCargando">Cargando...</div>
+          <div className="preloader"></div>
+          <div className="textCargando">Cargando...</div>
         </div>
         <Footer />
       </div>

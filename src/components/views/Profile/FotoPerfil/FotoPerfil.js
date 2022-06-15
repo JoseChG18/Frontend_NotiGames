@@ -4,9 +4,7 @@ import { useParams } from "react-router-dom";
 
 function FotoPerfil() {
   const id = useParams().id;
-  const [avatar, setAvatar] = useState(
-    "https://bootdey.com/img/Content/avatar/avatar7.png"
-  );
+  const [avatar, setAvatar] = useState();
 
   useEffect(() => {
     axios.get("api/user/avatar/" + id).then((res) => {

@@ -20,10 +20,8 @@ function EditStats(props) {
       setPerfil(response.data);
     });
   }, [id_user]);
-  // console.log(juegos);
 
   const agregarStat = (Stat) => {
-    // console.log(Stat)
     let data = {
       name: Stat.name,
       value: Stat.value,

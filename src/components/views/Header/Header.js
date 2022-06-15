@@ -104,13 +104,7 @@ function Header(props) {
 
   const buscarNombre = (e) => {
     e.preventDefault();
-    axios
-      .post("api/post/search", {
-        palabra: titulo,
-      })
-      .then((res) =>
-        console.log(res.data)
-      );
+    navigate("/Busqueda?term=" + titulo);
   };
 
   return (

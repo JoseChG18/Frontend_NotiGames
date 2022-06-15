@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import StatsInput from "./StatsInput";
 function StatsContent(props) {
-// console.log(props)
   const agregarStat = (Stat) => {
     props.onAdd(Stat)
   }
