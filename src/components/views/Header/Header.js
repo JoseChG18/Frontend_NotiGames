@@ -25,7 +25,7 @@ function Header(props) {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("user");
         // alert(response.data.message);
-        navigate("/");
+        navigate("/login");
       }
     });
   };
@@ -135,13 +135,6 @@ function Header(props) {
             {AuthContext}
             {Admin}
           </ul>
-          {/* <div className="d-flex filterIdClass">
-            <ul>
-              <li id="showFilter" onclick="showHideAddNotice('showFilter')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/filtrar.png" alt=""/></a></li>
-              <li id="showId" onclick="showHideAddNotice('showId')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/add.png" alt=""/></a></li>
-              <li id="showFechas" onclick="showHideAddNotice('showFechas')" className="addNoticia align-self-center m-2"><a href="#"><img src="/codigoapp/asset/imagenes/fechas.png" alt=""/></a></li>
-            </ul>
-          </div> */}
           <form onSubmit={buscarNombre} className="d-flex">
             <input
               name="titulo"

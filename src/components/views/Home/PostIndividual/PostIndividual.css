@@ -23,12 +23,6 @@
   display: none;
 }
 
-.formuFiltrar {
-  background-color: #eff0f5 !important;
-  width: 40vh !important;
-  border-radius: 7%;
-}
-
 .butFilter {
   background-color: #4d0b0b;
   color: white;
