@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import PostsEncontrados from "./PostsEncontrados";
 import UsuariosEncontrados from "./UsuariosEncontrados";
+import "./Busqueda.scss";
 
 function useQuery() {
   //https://www.codingdeft.com/posts/react-router-tutorial/
@@ -47,23 +48,23 @@ const Busqueda = () => {
     return (
       <div>
         <Header />
-        {term && <h2>Resultados para '{term}'</h2>}
-        <h4>Usuarios</h4>
+        {term && <h2 className="resultadosPara">Resultados para <div className="termDivResult">'{term}'</div></h2>}
+        <h4 className="usuariosResult">Usuarios</h4>
         {busqueda.users.length > 0 ? (
           busqueda.users.map((user) => (
             <UsuariosEncontrados key={user.id} datos={user} />
           ))
         ) : (
-          <h4>No se Encontro ningun Usuario.</h4>
+          <h4 className="resultadosPara">No se Encontro ningun Usuario.</h4>
         )}
 
-        <h4>Publicaciones</h4>
+        <h4 className="usuariosResult">Publicaciones</h4>
         {busqueda.posts.length > 0 ? (
           busqueda.posts.map((post) => (
             <PostsEncontrados key={post.id} datos={post} />
           ))
         ) : (
-          <h4>No se Encontro ninguna Publicación.</h4>
+          <h4 className="resultadosPara">No se Encontro ninguna Publicación.</h4>
         )}
 
         <Footer />

@@ -11,7 +11,7 @@ const UsuariosEncontrados = (props) => {
     });
   }, [props.datos.id]);
   return (
-    <div className="card mb-3">
+    <div className="result-users card mb-3">
       <div className="row g-0">
         <div className="col-md-4">
           <Link to={"/profile/" + props.datos.id}>
@@ -22,21 +22,21 @@ const UsuariosEncontrados = (props) => {
             />
           </Link>
         </div>
-        <div className="col-md-8">
+        <div className="estiloCardResult col-md-8">
           <div className="card-body">
-            <h5 className="card-title">
-              <Link to={"/profile/" + props.datos.id}>
+            <h5 className="perfilEnlace card-title">
+              <Link to={"/profile/" + props.datos.id} className="hrefPerfil">
                 {props.datos.nombre + " " + props.datos.apellidos}
               </Link>
             </h5>
-            <p className="card-text">Username: {props.datos.username}</p>
-            <p className="card-text">Email: {props.datos.email}</p>
-            <p className="card-text">Provincia: {props.datos.provincia}</p>
-            <p className="card-text">Ciudad: {props.datos.ciudad}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div className="card-text ctext"><div className="inlineCard">Username:  </div><div className="inlineCardResult">{props.datos.username} </div></div>
+            <div className="card-text ctext"><div className="inlineCard">Email:  </div><div className="inlineCardResult">{props.datos.email} </div></div>
+            <div className="card-text ctext"><div className="inlineCard">Provincia:  </div><div className="inlineCardResult">{props.datos.provincia} </div></div>
+            <div className="card-text ctext"><div className="inlineCard">Ciudad:  </div><div className="inlineCardResult">{props.datos.ciudad} </div></div>
+          </div >
+        </div >
+      </div >
+    </div >
   );
 };
 

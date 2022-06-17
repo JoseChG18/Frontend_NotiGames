@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./CrearPost.css";
+import "./CrearPost.scss";
 const CrearPost = () => {
   const [juegos, setJuegos] = useState();
   let date = new Date();
@@ -67,100 +67,104 @@ const CrearPost = () => {
   };
 
   return (
-    <div className="formuFiltrar">
-      <form onSubmit={crearPost} className="p-3 mt-3">
-        <div className="mb-3 col-md-12">
-          <label htmlFor="tituloNoticia" className="form-label">
-            Titulo:{" "}
-          </label>
-          <input
-            name="titulo"
-            type="text"
-            onChange={onChangeInput}
-            value={formulario.titulo}
-            className="form-control"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="cuerpoNoticia" className="form-label">
-            Cuerpo:{" "}
-          </label>
-          <textarea
-            name="texto"
-            onChange={onChangeInput}
-            value={formulario.texto}
-            className="form-control"
-            rows="3"
-          ></textarea>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="cuerpoNoticia" className="form-label">
-            Juegos:{" "}
-          </label>
-          <select
-            className="form-select"
-            name="juego"
-            onChange={onChangeInput}
-            value={formulario.juego}
-          >
-            <option value={"default"}>--- Selecciona un Juego --- </option>
-            {juegos &&
-              juegos.map((juego) => (
-                <option key={juego.id} value={juego.id}>
-                  {juego.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="mb-3 form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            onChange={onChangeCheckbox}
-            value={checked}
-            checked={checked === "1" ? true : false}
-            id="postProgramado"
-          />
-          <label className="form-check-label" htmlFor="postProgramado">
-            Publicacion Programada
-          </label>
-        </div>
-        {checked === "1" && (
-          <div className="programado">
-            <div className="mb-3 col-md-12">
-              <label htmlFor="fechaPost" className="form-label">
-                Fecha Post:{" "}
-              </label>
-              <input
-                className="form-control"
-                onChange={onChangeInput}
-                value={formulario.fechaPost}
-                type="date"
-                name="fechaPost"
-              />
-            </div>
-            <div className="mb-3 col-md-12">
-              <label htmlFor="horaPost" className="form-label">
-                Hora Post:{" "}
-              </label>
-              <input
-                className="form-control"
-                onChange={onChangeInput}
-                value={formulario.horaPost}
-                type="time"
-                name="horaPost"
-              />
-            </div>
+    <div className="CajonFormCrear">
+      <div className="mensajeForo foroCrear">
+        <form onSubmit={crearPost} className="p-3 mt-3">
+          <div className="mb-3 col-md-12">
+            <label htmlFor="tituloNoticia" className="form-label">
+              Titulo:{" "}
+            </label>
+            <input
+              name="titulo"
+              type="text"
+              onChange={onChangeInput}
+              value={formulario.titulo}
+              className="form-control"
+            />
           </div>
-        )}
-        <button
-          name="publicarName"
-          type="submit"
-          className="btn btn-outline-success mt-2"
-        >
-          Publicar
-        </button>
-      </form>
+          <div className="mb-3">
+            <label htmlFor="cuerpoNoticia" className="form-label">
+              Cuerpo:{" "}
+            </label>
+            <textarea
+              name="texto"
+              onChange={onChangeInput}
+              value={formulario.texto}
+              className="form-control"
+              rows="3"
+            ></textarea>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="cuerpoNoticia" className="form-label">
+              Juegos:{" "}
+            </label>
+            <select
+              className="form-select"
+              name="juego"
+              onChange={onChangeInput}
+              value={formulario.juego}
+            >
+              <option value={"default"}>--- Selecciona un Juego --- </option>
+              {juegos &&
+                juegos.map((juego) => (
+                  <option key={juego.id} value={juego.id}>
+                    {juego.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="mb-3 form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              onChange={onChangeCheckbox}
+              value={checked}
+              checked={checked === "1" ? true : false}
+              id="postProgramado"
+            />
+            <label className="form-check-label" htmlFor="postProgramado">
+              Publicacion Programada
+            </label>
+          </div>
+          {checked === "1" && (
+            <div className="programado">
+              <div className="mb-3 col-md-12">
+                <label htmlFor="fechaPost" className="form-label">
+                  Fecha Post:{" "}
+                </label>
+                <input
+                  className="form-control"
+                  onChange={onChangeInput}
+                  value={formulario.fechaPost}
+                  type="date"
+                  name="fechaPost"
+                />
+              </div>
+              <div className="mb-3 col-md-12">
+                <label htmlFor="horaPost" className="form-label">
+                  Hora Post:{" "}
+                </label>
+                <input
+                  className="form-control"
+                  onChange={onChangeInput}
+                  value={formulario.horaPost}
+                  type="time"
+                  name="horaPost"
+                />
+              </div>
+            </div>
+          )}
+          <div className="cajonBtnPublicar">
+            <button
+              name="publicarName"
+              type="submit"
+              className="publicarPostCreado btn btn-outline-success mt-2"
+            >
+              Publicar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
