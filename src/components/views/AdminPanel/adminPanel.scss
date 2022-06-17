@@ -87,7 +87,7 @@
     border-radius: 10px;
 }
 
-#v-pills-juegos{
+.juegosAdmin{
     display: flex;
     padding: 0.5rem;
     gap: 0.5rem;
@@ -101,7 +101,7 @@
 
 .addJuego{
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     &>form{
         border: 1px solid black;
         &>:nth-child(1n){

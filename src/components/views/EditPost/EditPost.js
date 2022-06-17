@@ -60,9 +60,7 @@ function EditPost() {
         }
       });
   };
-  // console.log(inputs);
-  // console.log(post)
-  // console.log(juegos)
+
   return (
     <div className="m-0 row justify-content-center">
       <Header />

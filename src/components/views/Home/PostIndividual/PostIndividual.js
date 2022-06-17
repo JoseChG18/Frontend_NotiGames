@@ -47,7 +47,9 @@ function PostIndividual(props) {
         {/* Inicio Contenedor-footer */}
         <div className="container-footer">
           {/* Inicio Contenedor-Fecha */}
-          <div className="fechaPublicacion">{props.datos.created_at}</div>
+          <div className="fechaPublicacion">
+            {props.datos.fecha_publicacion}
+          </div>
           {/* Fin Contenedor-Fecha */}
 
           {/* Inicio Contenedor-Firma */}

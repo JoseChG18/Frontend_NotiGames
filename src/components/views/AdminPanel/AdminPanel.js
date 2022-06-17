@@ -90,8 +90,8 @@ function AdminPanel() {
       <div className="adminPanel">
         <Header />
         <div className="contPreload">
-          <div class="preloader"></div>
-          <div class="textCargando">Cargando...</div>
+          <div className="preloader"></div>
+          <div className="textCargando">Cargando...</div>
         </div>
         <Footer />
       </div>
@@ -145,7 +145,7 @@ function AdminPanel() {
                   {users
                     ? users.map((user) =>
                       user.admin === 1 ? (
-                        <div key={user.id} >
+                        <div key={user.id}>
                           {user.username}{" "}
                           <select
                             // className="form-select"
@@ -208,51 +208,53 @@ function AdminPanel() {
               </div>
 
               <div
-                className="juegosEdit tab-pane fade"
+                className="tab-pane fade"
                 id="v-pills-juegos"
                 role="tabpanel"
                 aria-labelledby="v-pills-juegos-tab"
               >
-                <div className="useradmin">JUEGOS</div>
-                {juegos
-                  ? juegos.map((juego) => (
-                    <div key={juego.id} className="p">
+                <div className="juegosAdmin">
+                  <div className="useradmin">JUEGOS</div>
+                  {juegos
+                    ? juegos.map((juego) => (
+                      <div key={juego.id} className="p">
+                        <input
+                          id={juego.id}
+                          onChange={onChangeInput}
+                          type={"text"}
+                          defaultValue={juego.name}
+                        />
+                        <button
+                          id={juego.id}
+                          type="button"
+                          className="btn btn-outline-success"
+                          onClick={modificarJuego}
+                        >
+                          Modificar
+                        </button>
+                        <button
+                          id={juego.id}
+                          type="button"
+                          className="btn btn-outline-danger"
+                          onClick={eliminarJuego}
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    ))
+                    : ""}
+                  <div className="addJuego">
+                    <form onSubmit={añadirJuego}>
                       <input
-                        id={juego.id}
-                        onChange={onChangeInput}
+                        onChange={onChangeInputAgregar}
                         type={"text"}
-                        defaultValue={juego.name}
+                        value={juegoNuevo}
                       />
-                      <button
-                        id={juego.id}
-                        type="button"
-                        className=" btn btn-outline-primary"
-                        onClick={modificarJuego}
-                      >
-                        Modificar
+                      <button type="submit" className="btn btn-outline-success">
+                        Añadir
                       </button>
-                      <button
-                        id={juego.id}
-                        type="button"
-                        className="btn btn-outline-danger"
-                        onClick={eliminarJuego}
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  ))
-                  : ""}
-                <div className="addJuego">
-                  <form onSubmit={añadirJuego}>
-                    <input
-                      onChange={onChangeInputAgregar}
-                      type={"text"}
-                      value={juegoNuevo}
-                    />
-                    <button type="submit" className="btn btn-outline-success">
-                      Añadir
-                    </button>
-                  </form>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>

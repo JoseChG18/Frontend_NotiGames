@@ -21,10 +21,8 @@ function EditStats(props) {
       setPerfil(response.data);
     });
   }, [id_user]);
-  // console.log(juegos);
 
   const agregarStat = (Stat) => {
-    // console.log(Stat)
     let data = {
       name: Stat.name,
       value: Stat.value,
@@ -77,7 +75,7 @@ function EditStats(props) {
   return (
     <div className="contEditStats">
       <Header />
-      <div className="volver"><Link to={"/profile/" + id_user}>Volver<img src={volver} width={"30px"} height={"30px"} /></Link></div>
+      <div className="volver"><Link to={"/profile/" + id_user}>Volver<img src={volver} width={"30px"} height={"30px"} alt="volver" /></Link></div>
       <div className="Estadisticas d-flex mx-auto my-auto align-items-start mb-5 stats-diff">
         <div
           className="lateralIzq col-3 nav flex-column nav-pills"

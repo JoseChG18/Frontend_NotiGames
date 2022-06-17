@@ -4,6 +4,7 @@ import Footer from "../Footer";
 import "./Home.css";
 import "../scss/preloader.scss";
 import PostIndividual from "./PostIndividual";
+import CrearPost from "./CrearPost";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,8 +26,8 @@ function Home() {
         <Header />
         {/* <h1 className="text-center">Cargando...</h1> */}
         <div className="contPreload">
-          <div class="preloader"></div>
-          <div class="textCargando">Cargando...</div>
+          <div className="preloader"></div>
+          <div className="textCargando">Cargando...</div>
         </div>
         <Footer />
       </div>
@@ -35,6 +36,8 @@ function Home() {
     return (
       <div>
         <Header />
+        {localStorage.getItem("auth_token") && <CrearPost />}
+
         <div className="grandContPosts">
           {posts.map((post) => (
             <PostIndividual key={post.id} datos={post} />
