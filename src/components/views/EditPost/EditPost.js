@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./EditPost.scss";
 import Header from "../Header";
 import Footer from "../Footer";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 /**
  * Editar POST.
@@ -12,47 +13,110 @@ import { Link, useParams } from "react-router-dom";
 
 function EditPost() {
   const id = useParams().id;
+  const navigate = useNavigate();
+  const [inputs, setInputs] = useState({
+    tittle: "",
+    description: "",
+    idGame: "",
+  });
+  const [post, setPost] = useState();
+  const [juegos, setJuegos] = useState();
+
+  useEffect(() => {
+    axios.get(`api/post/${id}`).then((res) => {
+      setPost(res.data);
+      setInputs({
+        ...inputs,
+        tittle: res.data.tittle,
+        description: res.data.description,
+        idGame: res.data.game.id,
+      });
+    });
+  }, [id]);
+
+  const idJuegoPost = post ? post.game.id : "";
+
+  useEffect(() => {
+    axios.get("api/game").then((response) => {
+      for (const index in response.data) {
+        if (response.data[index].id === idJuegoPost) {
+          response.data.splice(index, 1);
+        }
+      }
+      setJuegos(response.data);
+    });
+  }, [idJuegoPost]);
+
+  const onChangeInputs = (e) => {
+    e.persist();
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
+
+  const editarPost = (e) => {
+    e.preventDefault();
+    axios
+      .put("api/post/" + id, {
+        tittle: inputs.tittle,
+        description: inputs.description,
+        idGame: inputs.idGame,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          navigate("/post/" + id);
+        }
+      });
+  };
 
   return (
     <div className="m-0 row justify-content-center">
       <Header />
-      <form action="" method="post" className="container p-3 mt-4">
+      <form onSubmit={editarPost} method="post" className="container p-3 mt-4">
         <div className="mb-3 col-md-12">
           <label htmlFor="tituloNoticia" className="form-label">
             Titulo:{" "}
           </label>
           <input
-            name="titulo"
+            name="tittle"
             type="text"
             className="form-control"
-            value="TituloA"
+            onChange={onChangeInputs}
+            value={inputs.tittle}
           />
         </div>
         <div className="mb-3">
           <label htmlFor="cuerpoNoticia" className="form-label">
             Cuerpo:{" "}
           </label>
-          <textarea name="texto" className="form-control" rows="3">
-            Texto Post
-          </textarea>
+          <textarea
+            name="description"
+            className="form-control"
+            rows="3"
+            onChange={onChangeInputs}
+            value={inputs.description}
+          />
         </div>
         <label htmlFor="idcategoria" className="form-label">
           Categoria:
         </label>
         <select
           className="form-select mb-3"
-          aria-label="Default select example"
-          name="idcategoria"
+          onChange={onChangeInputs}
+          name="idGame"
+          value={inputs.idGame}
         >
-          <option selected value="<?php echo $categoria->ID_Categoria ?>">
-            CategoriaA
+          <option value={post ? post.game.id : ""}>
+            {post ? post.game.name : ""}
           </option>
 
-          <option value="<?php echo $categoria->ID_Categoria ?>">
-            Categorias a Seleccionar
-          </option>
+          {juegos
+            ? juegos.map((juego) => (
+                <option key={juego.id} value={juego.id}>
+                  {juego.name}
+                </option>
+              ))
+            : ""}
         </select>
-        <div className="mb-3 col-md-12">
+        {/* <div className="mb-3 col-md-12">
           <label htmlFor="fechaPost" className="form-label">
             Fecha Post:{" "}
           </label>
@@ -73,7 +137,7 @@ function EditPost() {
             name="idPersona"
             value="UserA"
           />
-        </div>
+        </div> */}
 
         <button
           name="modificar"
@@ -82,8 +146,12 @@ function EditPost() {
         >
           Modificar
         </button>
-        <Link to={"/post/" + id}
-          className="btn btn-outline-danger mt-2 mx-1 float-end">Cancelar</Link>
+        <Link
+          to={"/post/" + id}
+          className="btn btn-outline-danger mt-2 mx-1 float-end"
+        >
+          Cancelar
+        </Link>
       </form>
       <Footer />
     </div>

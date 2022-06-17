@@ -24,7 +24,15 @@ function EditProfile(props) {
 
   useEffect(() => {
     axios.get("api/user/" + id)
-      .then((result) => setUpdate(result.data))
+      .then((result) => setUpdate(result.data.data))
+  }, [id]);
+
+  const [avatar, setAvatar] = useState();
+
+  useEffect(() => {
+    axios.get("api/user/avatar/" + id).then((res) => {
+      setAvatar("http://localhost:8000/uploads/avatars/" + res.data);
+    });
   }, [id]);
 
   const onChangeInputs = (e) => {
@@ -63,7 +71,7 @@ function EditProfile(props) {
 
       {/* Inicio Contenedor Editar-Perfil */}
       <form onSubmit={actualizaPerfil}>
-        <div className="simu-body d-flex justify-content-center aling-self-center">
+        <div className="simu-body d-flex justify-content-center aling-self-center mt-5">
           <div className="container rounded bg-white mt-0 mb-0">
             <div className="row">
               <div className="col-md-4 border-end">
@@ -72,14 +80,14 @@ function EditProfile(props) {
                     className="rounded-circle mt-5"
                     width="150px"
                     alt="Foto Default o tuya"
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                    src={avatar}
                   />
                 </div>
               </div>
               <div className="col-md-8 border-end">
                 <div className="p-3 py-5">
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h4 className="text-right">Edita tu Perfil</h4>
+                  <div className="d-flex justify-content-center align-items-center mb-3">
+                    <h4 className="tilEditProfile text-right">Edita tu Perfil</h4>
                   </div>
                   <div className="row mt-3">
                     <div className="col-md-12">
@@ -183,13 +191,13 @@ function EditProfile(props) {
                       <span className="text-danger">{(updateInput.errores) ? updateInput.errores["ciudad"] : ""}</span>
                     </div>
                   </div>
-                  <div className="mt-5 text-center">
-                    <button className="btn btn-primary profile-button" type="submit">
+                  <div className="mt-5 text-center edit-profile-btn">
+                    <button className="btn-edit btn btn-primary profile-button" type="submit">
                       Editar
                     </button>
                     <Link
                       to={"/profile/" + id}
-                      className="btn btn-primary profile-button"
+                      className="btn-edit btn btn-primary profile-button"
                     >
                       Cancelar
                     </Link>

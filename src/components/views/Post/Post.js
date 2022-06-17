@@ -1,10 +1,11 @@
-import "../Post/Post.scss";
+import "./Post.scss";
 import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import Footer from "../Footer";
 import Comentario from "./Comentario";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "../scss/preloader.scss";
 
 /**
  * Funcion que genera el contenedor del POST.
@@ -56,7 +57,9 @@ function Post() {
 
     axios.post("api/comment", data).then((response) => {
       if (response.data.status === 200) {
-        axios.get("api/post/" + idPost).then((response) => setPost(response.data));
+        axios
+          .get("api/post/" + idPost)
+          .then((response) => setPost(response.data));
         setComentario("");
       } else {
         setPost({ ...post, errores: response.data.errores });
@@ -64,28 +67,57 @@ function Post() {
     });
   };
 
-  const id_user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).id : "";
+  const id_user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).id
+    : "";
 
   const deleteComment = (comment) => {
-    axios.delete("api/comment/" + comment)
-      .then((response) => {
-        if (response.data.status === 200) {
-          axios.get("api/post/" + idPost).then((response) => setPost(response.data));
-        } else {
-          setPost({ ...post, errores: response.data.errores });
-        }
-      })
-  }
+    axios.delete("api/comment/" + comment).then((response) => {
+      if (response.data.status === 200) {
+        axios
+          .get("api/post/" + idPost)
+          .then((response) => setPost(response.data));
+      } else {
+        setPost({ ...post, errores: response.data.errores });
+      }
+    });
+  };
+
+  const isAdmin = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).admin
+    : false;
+  let PropietarioAdmin = "";
 
   if (isLoading) {
     return (
       <div>
         <Header />
-        <h1 className="text-center">Cargando...</h1>
+        {/* <h1 className="text-center">Cargando...</h1> */}
+        <div className="contPreload">
+          <div className="preloader"></div>
+          <div className="textCargando">Cargando...</div>
+        </div>
         <Footer />
       </div>
     );
   } else {
+    if (id_user === post.user.id || isAdmin) {
+      PropietarioAdmin = (
+        <div>
+          <button
+            onClick={deletePost}
+            className="charactersCome btn btn-danger my-2"
+            id="btnComentar"
+            type="submit"
+          >
+            X
+          </button>
+          <Link to={"edit"} className="btn btn-outline-primary my-2">
+            Modificar
+          </Link>
+        </div>
+      );
+    }
     return (
       <div>
         <Header />
@@ -103,21 +135,7 @@ function Post() {
               {/* Fin Contenedor-Firma */}
             </div>
             {/* Si eres Dueño del post o Admin*/}
-            {id_user === post.user.id && (
-              <div>
-                <button
-                  onClick={deletePost}
-                  className="btn btn-danger my-2"
-                  id="btnComentar"
-                  type="submit"
-                >
-                  X
-                </button>
-                <Link to={"edit"} className="btn btn-danger my-2">
-                  Modificar
-                </Link>
-              </div>
-            )}
+            {PropietarioAdmin}
             {/* Fin Contenedor-footer */}
             {/* Inicio Titulo noticia */}
             <h1 id="tNoticia">{post.tittle}</h1>
@@ -125,6 +143,9 @@ function Post() {
             {/* Inicio Contenido noticia */}
             <p id="contenidoNoticia">{post.description}</p>
             {/* Fin Contenido noticia */}
+            <div className="container-footer">
+              <div className="firma">{post.game.name}</div>
+            </div>
           </div>
           {/* Fin noticia */}
           {/* Añadir Comentario */}
@@ -147,7 +168,7 @@ function Post() {
                   <button
                     type="submit"
                     id="btnComentar"
-                    className="btn btn-primary"
+                    className="charactersCome btn btn-primary"
                   >
                     Comentar
                   </button>

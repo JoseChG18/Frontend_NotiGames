@@ -24,12 +24,6 @@
     }
 }
 
-.formuFiltrar{
-    background-color: rgb(239, 240, 245) !important;
-    width: 40vh !important;
-    border-radius: 7%;
-}
-
 .butFilter{
     background-color: $color_background_principal;
     color: white;
@@ -87,14 +81,14 @@
     }
 }
 
-.btn-outline-primary{
-    color: black;
-    border-color:black;
-    &:hover{
-    background-color: black;
-    border-color:black;
-    }
-}
+// .btn-outline-primary{
+//     color: black;
+//     border-color:black;
+//     &:hover{
+//     background-color: black;
+//     border-color:black;
+//     }
+// }
 
 div#div_file{
     background-color: #721414 !important;
@@ -104,4 +98,14 @@ div#div_file{
         transition: 0.55s;
         transform: scale(1.05);
     }
+}
+
+.charactersCome{
+    margin-right: 3px;
+    cursor: pointer !important;
+
+}
+
+.btnNo{
+    cursor: default;
 }

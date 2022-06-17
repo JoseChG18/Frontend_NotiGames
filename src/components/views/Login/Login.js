@@ -1,5 +1,5 @@
 import "./Login.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
 import { useState } from "react";
@@ -94,9 +94,9 @@ function Login() {
           <button type="submit" className="btn my-2 btn-primary">
             Iniciar Sesion
           </button>
-          <Link to={"/register"} className="btn my-2 btn-primary">
+          {/* <Link to={"/register"} className="btn my-2 btn-primary">
             Registrarse
-          </Link>
+          </Link> */}
         </form>
       </div>
       <Footer />

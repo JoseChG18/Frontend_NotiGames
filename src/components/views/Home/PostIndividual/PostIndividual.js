@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Vermas from "./Vermas";
-import "./PostIndividual.css";
 import { Link } from "react-router-dom";
+import "./PostIndividual.scss";
 
 /**
  * Funcion Para cada POST.
@@ -55,7 +55,9 @@ function PostIndividual(props) {
         {/* Inicio Contenedor-footer */}
         <div className="container-footer">
           {/* Inicio Contenedor-Fecha */}
-          <div className="fechaPublicacion">{props.datos.created_at}</div>
+          <div className="fechaPublicacion">
+            {props.datos.fecha_publicacion}
+          </div>
           {/* Fin Contenedor-Fecha */}
 
           {/* Inicio Contenedor-Firma */}

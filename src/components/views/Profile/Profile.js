@@ -6,7 +6,7 @@ import Footer from "../Footer";
 
 import FotoPerfil from "./FotoPerfil";
 import Estadisticas from "./Estadisticas";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 /**
@@ -17,25 +17,34 @@ import axios from "axios";
 function Profile() {
   const [profile, setProfile] = useState([]);
   const id = useParams("id").id;
-
+  const navigate = useNavigate();
   useEffect(() => {
-    axios.get("api/user/" + id)
-      .then((result) => setProfile(result.data))
-  }, [id]);
+    axios.get("api/user/" + id).then((result) => {
+      if (result.data.status === 200) {
+        setProfile(result.data.data);
+      } else {
+        navigate("/notfound");
+      }
+    });
+  }, [id, navigate]);
 
-  let propietario = ""
-  if (JSON.parse(localStorage.getItem("user")).id.toString() === id) {
+  const idUser = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).id
+    : "";
+
+  let propietario = "";
+  if (idUser.toString() === id) {
     propietario = (
       <div className="btn-edit-profile">
         <div className="row">
-          <div className="col-sm-3 ">
-            <Link to={"edit"} className="btn btn-outline-primary">
+          <div className="btn-perfil-enviar">
+            <Link to={"edit"} className="btn-edit btn btn-outline-primary">
               Editar
             </Link>
           </div>
         </div>
       </div>
-    )
+    );
   }
   return (
     <div>
@@ -43,7 +52,7 @@ function Profile() {
       {/* Inicio Contenedor Perfil */}
       <div className="container-perfil contenedorPadre">
         {/* https://www.bootdey.com/snippets/view/profile-with-data-and-skills */}
-        <div className="container-div">
+        <div className="container-div profile-padre">
           <div className="container">
             <div className="row gutters-sm">
               <div className="col-md-4 mb-3">
@@ -110,7 +119,10 @@ function Profile() {
                   </div>
                 </div>
               </div>
-              <Estadisticas />
+              <Estadisticas
+                estadisticas={profile.statistics}
+                juegos={profile.games}
+              />
             </div>
           </div>
         </div>
